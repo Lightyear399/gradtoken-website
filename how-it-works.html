@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How It Works β€” GradToken</title>
+<meta name="description" content="GradLearn and GradStake: how GradToken's learn-to-earn loop actually works, step by step.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="nav">
+  <div class="wrap">
+    <a href="index.html" class="nav-mark">GradToken<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="how-it-works.html" aria-current="page">How it works</a></li>
+      <li><a href="tokenomics.html">Tokenomics</a></li>
+      <li><a href="roadmap.html">Roadmap</a></li>
+      <li><a href="security.html">Security</a></li>
+      <li><a href="community.html">Community</a></li>
+    </ul>
+    <a class="nav-cta" href="security.html">View Verified Contracts</a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="how-it-works.html" aria-current="page">How it works</a>
+    <a href="tokenomics.html">Tokenomics</a>
+    <a href="roadmap.html">Roadmap</a>
+    <a href="security.html">Security</a>
+    <a href="community.html">Community</a>
+  </div>
+</nav>
+
+<main id="main">
+
+  <header class="page-header">
+    <div class="wrap">
+      <span class="page-eyebrow">The core loop</span>
+      <h1>Two products. One reason to come back.</h1>
+      <p class="lede">GradToken isn't promising five products at once. Everything here is scoped to what's actually buildable by a small, focused team β€” starting with GradLearn and GradStake.</p>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <div class="loop-grid reveal">
+        <div class="product-card">
+          <span class="tag">Learn</span>
+          <h3>GradLearn</h3>
+          <p>Course and quiz content with a clear earn-on-completion mechanic. Finish a milestone, receive GRAD β€” plus a blockchain-verified certificate that can't be faked or quietly revised.</p>
+          <ul>
+            <li>Pay for courses in GRAD</li>
+            <li>Earn GRAD for completed milestones</li>
+            <li>Certificates issued on-chain, tamper-resistant</li>
+          </ul>
+        </div>
+
+        <div class="loop-arrow" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+
+        <div class="product-card">
+          <span class="tag">Earn</span>
+          <h3>GradStake</h3>
+          <p>Stake the GRAD you've earned and put it to work instead of letting it sit idle. Built with a minimum stake amount and hold duration β€” a deliberate anti-sniping design decided during penetration testing, not an afterthought.</p>
+          <ul>
+            <li>Stake GRAD, earn GRAD rewards over time</li>
+            <li>Emergency withdraw always available, principal never trapped</li>
+            <li>Reward accounting battle-tested against real attack attempts</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="detail-block reveal">
+        <h3>How GradLearn actually works</h3>
+        <p>A learner's path through GradLearn is a straightforward loop, designed to give both education access and credential trust in the same product:</p>
+        <ol class="step-list">
+          <li>
+            <span class="step-text"><strong>Enroll in a course using GRAD.</strong> Course pricing is set in GRAD, keeping the whole loop inside the ecosystem rather than requiring a separate payment rail.</span>
+          </li>
+          <li>
+            <span class="step-text"><strong>Complete milestones and quizzes.</strong> Progress is tracked per-milestone, not just at course completion, so partial progress still counts toward earning.</span>
+          </li>
+          <li>
+            <span class="step-text"><strong>Earn GRAD back for verified completion.</strong> Completing a milestone triggers a GRAD reward β€” the "earn" half of learn-to-earn.</span>
+          </li>
+          <li>
+            <span class="step-text"><strong>Receive an on-chain certificate.</strong> The completed credential is issued on-chain, making it independently verifiable by any employer or platform β€” not just a PDF someone could photoshop.</span>
+          </li>
+        </ol>
+      </div>
+
+      <div class="detail-block reveal">
+        <h3>How GradStake actually works</h3>
+        <p>GradStake exists so GRAD earned through GradLearn has somewhere productive to go, rather than sitting idle in a wallet:</p>
+        <ol class="step-list">
+          <li>
+            <span class="step-text"><strong>Stake GRAD into the contract.</strong> A minimum stake amount applies β€” a deliberate anti-sniping measure, not a UX accident (see Security for why).</span>
+          </li>
+          <li>
+            <span class="step-text"><strong>Earn rewards proportional to your share of the pool, over time.</strong> The longer and larger your stake relative to the total pool, the more of the reward emission you earn.</span>
+          </li>
+          <li>
+            <span class="step-text"><strong>Claim rewards once the minimum hold duration passes.</strong> This isn't arbitrary friction β€” it's what closes a real reward-manipulation exploit found during penetration testing.</span>
+          </li>
+          <li>
+            <span class="step-text"><strong>Withdraw principal any time.</strong> An emergency withdrawal path is always available, instantly, even mid-lock β€” it forfeits pending rewards, but your principal is never trapped.</span>
+          </li>
+        </ol>
+      </div>
+
+      <div class="callout reveal">
+        <p><strong>Why this pairing, specifically:</strong> GradLearn drives new user acquisition with a clean, low-regulatory-risk pitch β€” learn, and earn GRAD for it. GradStake gives those earners a reason to hold and use GRAD, closing the utility loop that gives the token real, non-speculative demand. Both are buildable by a small team without touching banking licenses or a two-sided marketplace's cold-start problem β€” unlike several ideas in GradToken's longer-term vision. See the <a href="roadmap.html" style="color:var(--brass-bright);">full roadmap</a> for what's committed now versus what's a future possibility.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-mark">GradToken<span class="dot">.</span></div>
+        <p class="footer-tag">Learn-to-earn, verified on-chain. Built in the open, one tested phase at a time.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Project</h4>
+          <a href="how-it-works.html">How it works</a>
+          <a href="tokenomics.html">Tokenomics</a>
+          <a href="roadmap.html">Roadmap</a>
+        </div>
+        <div class="footer-col">
+          <h4>Verify</h4>
+          <a href="security.html">Security &amp; contracts</a>
+          <a href="https://sepolia.etherscan.io/address/0x6441F1F8b50F2149AF69DfEf37eE74C4A31AbEed#code" target="_blank" rel="noopener noreferrer">Etherscan</a>
+        </div>
+        <div class="footer-col">
+          <h4>Community</h4>
+          <a href="community.html">Channels</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="disclaimer">Sepolia is a public test network. GRAD shown on this page has no monetary value and cannot be bought or sold. Nothing here is financial advice or an offer to sell securities.</p>
+      <span class="copyright">Β© 2026 GradToken</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

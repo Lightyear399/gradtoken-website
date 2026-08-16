@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tokenomics β€” GradToken</title>
+<meta name="description" content="GRAD's fixed 1,000,000,000 supply, allocation breakdown, and vesting schedules β€” enforced on-chain, verifiable on Sepolia Etherscan.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="nav">
+  <div class="wrap">
+    <a href="index.html" class="nav-mark">GradToken<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="how-it-works.html">How it works</a></li>
+      <li><a href="tokenomics.html" aria-current="page">Tokenomics</a></li>
+      <li><a href="roadmap.html">Roadmap</a></li>
+      <li><a href="security.html">Security</a></li>
+      <li><a href="community.html">Community</a></li>
+    </ul>
+    <a class="nav-cta" href="security.html">View Verified Contracts</a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="how-it-works.html">How it works</a>
+    <a href="tokenomics.html" aria-current="page">Tokenomics</a>
+    <a href="roadmap.html">Roadmap</a>
+    <a href="security.html">Security</a>
+    <a href="community.html">Community</a>
+  </div>
+</nav>
+
+<main id="main">
+
+  <header class="page-header">
+    <div class="wrap">
+      <span class="page-eyebrow">The ledger</span>
+      <h1>1,000,000,000 GRAD. Fixed. Forever.</h1>
+      <p class="lede">There is no mint function anywhere in the GradToken contract after deployment. What's below is the entire supply, split once, on-chain, with no way to inflate it later.</p>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <div class="ledger-panel reveal">
+        <div class="ledger-head">
+          <h3>Allocation</h3>
+          <span class="total">TOTAL Β· 1,000,000,000 GRAD</span>
+        </div>
+
+        <div class="ledger-row">
+          <div class="ledger-name">Community &amp; Ecosystem<span>Feeds GradStake rewards</span></div>
+          <div class="ledger-bar"><i style="width:100%"></i></div>
+          <div class="ledger-pct">35%</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-name">Team<span>18mo linear vest, 12mo cliff</span></div>
+          <div class="ledger-bar"><i style="width:51%"></i></div>
+          <div class="ledger-pct">18%</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-name">Treasury<span>Protocol reserve</span></div>
+          <div class="ledger-bar"><i style="width:43%"></i></div>
+          <div class="ledger-pct">15%</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-name">Public Sale &amp; Liquidity<span>DEX liquidity + public sale</span></div>
+          <div class="ledger-bar"><i style="width:34%"></i></div>
+          <div class="ledger-pct">12%</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-name">Investors<span>18mo linear vest, 6mo cliff</span></div>
+          <div class="ledger-bar"><i style="width:29%"></i></div>
+          <div class="ledger-pct">10%</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-name">Marketing<span>Community growth</span></div>
+          <div class="ledger-bar"><i style="width:17%"></i></div>
+          <div class="ledger-pct">6%</div>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-name">Advisors<span>18mo linear vest, 12mo cliff</span></div>
+          <div class="ledger-bar"><i style="width:11%"></i></div>
+          <div class="ledger-pct">4%</div>
+        </div>
+      </div>
+
+      <div class="detail-block reveal">
+        <h3>Why the largest share goes to the community</h3>
+        <p>The largest single allocation, at 35%, goes to Community &amp; Ecosystem Rewards β€” funding GradLearn and GradStake rewards directly β€” rather than to the team or early investors. GradToken's core pitch is utility-driven demand, not speculation, and the allocation is built to reflect that: the largest share goes to the people actually using the platform.</p>
+        <p>For scale, 1 billion GRAD sits between two comparable learn-to-earn tokens: BitDegree (BDG) has a max supply of 660 million, while STEPN (GMT), the most successful X-to-earn token to date, has a max supply of 6 billion. It's a normal, defensible number for this category rather than an inflated one.</p>
+      </div>
+
+      <div class="detail-block reveal">
+        <h3>Vesting: what actually unlocks, and when</h3>
+        <p>Total supply size alone doesn't determine whether a token's distribution is aggressive β€” how much can hit the market at once does. Team, investor, and advisor allocations are all subject to a cliff followed by linear monthly vesting; none unlock in a lump sum.</p>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:0.6rem; margin-top:1rem;">
+          <li style="color:var(--text-on-navy-muted); font-size:0.96rem;">β€” <strong style="color:var(--parchment);">Team:</strong> 12-month cliff, then linear release over 24 months</li>
+          <li style="color:var(--text-on-navy-muted); font-size:0.96rem;">β€” <strong style="color:var(--parchment);">Investors:</strong> 6-month cliff, then linear release over 18 months</li>
+          <li style="color:var(--text-on-navy-muted); font-size:0.96rem;">β€” <strong style="color:var(--parchment);">Advisors:</strong> 12-month cliff, then linear release over 18 months</li>
+        </ul>
+        <p style="margin-top:1rem;">Community &amp; Ecosystem tokens carry no calendar-based unlock at all β€” they are released only as earned or claimed through actual GradLearn and GradStake activity. All three vesting schedules are enforced on-chain by separate, independently verified GradVesting contracts β€” see the <a href="security.html" style="color:var(--brass-bright);">Security page</a> for direct links.</p>
+      </div>
+
+      <div class="callout reveal">
+        <p><strong>Left deliberately open, in the interest of not presenting false precision:</strong> the exact Token Generation Event date (set once Phase 1 and Phase 2 are complete), the final investor allocation (currently reserved at 10%, could shift toward 0% if no funding round happens before TGE), and treasury governance structure (multisig now, DAO-governed under Phase 5).</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-mark">GradToken<span class="dot">.</span></div>
+        <p class="footer-tag">Learn-to-earn, verified on-chain. Built in the open, one tested phase at a time.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Project</h4>
+          <a href="how-it-works.html">How it works</a>
+          <a href="tokenomics.html">Tokenomics</a>
+          <a href="roadmap.html">Roadmap</a>
+        </div>
+        <div class="footer-col">
+          <h4>Verify</h4>
+          <a href="security.html">Security &amp; contracts</a>
+          <a href="https://sepolia.etherscan.io/address/0x6441F1F8b50F2149AF69DfEf37eE74C4A31AbEed#code" target="_blank" rel="noopener noreferrer">Etherscan</a>
+        </div>
+        <div class="footer-col">
+          <h4>Community</h4>
+          <a href="community.html">Channels</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="disclaimer">Sepolia is a public test network. GRAD shown on this page has no monetary value and cannot be bought or sold. Nothing here is financial advice or an offer to sell securities.</p>
+      <span class="copyright">Β© 2026 GradToken</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
