@@ -1,0 +1,35 @@
+name: Bug Report
+description: Something broken on the website, or unexpected behavior while testing on Sepolia
+labels: ["bug", "testnet"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for testing GradToken. One important thing first:
+        Found a possible **security vulnerability** in a smart contract? Please do NOT file it here β€” email gradtokenofficial@gmail.com privately instead, so it can be fixed before anyone else finds it. Everything else (website bugs, confusing UX, broken links) belongs here.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what actually happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: false
+  - type: input
+    id: network
+    attributes:
+      label: Where did this happen?
+      description: e.g. "Sepolia testnet" or "website"
+    validations:
+      required: false
+  - type: input
+    id: wallet
+    attributes:
+      label: Wallet address (optional, only if relevant)
+    validations:
+      required: false
