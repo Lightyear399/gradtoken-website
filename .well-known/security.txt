@@ -1,0 +1,16 @@
+Contact: mailto:security@example.com
+Preferred-Languages: en
+Canonical: /.well-known/security.txt
+Policy: /security.html
+Expires: 2027-08-13T00:00:00.000Z
+
+# IMPORTANT β€” REPLACE THE CONTACT LINE ABOVE BEFORE DEPLOYING.
+# security@example.com is a placeholder, not a real address. A security.txt
+# file with a non-functional contact is worse than no file at all, since it
+# signals a reporting channel that doesn't actually work. Replace it with a
+# real email you check, before this file goes live.
+#
+# GradToken is a Phase 1, pre-audit project. If you find a genuine
+# vulnerability in the smart contracts (see the Security page for verified
+# addresses) or this website, please report it privately to the address
+# above rather than disclosing it publicly first.
