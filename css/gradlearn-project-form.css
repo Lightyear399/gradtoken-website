@@ -1,0 +1,76 @@
+/* ==========================================================================
+   GradLearn: Project Submission Form
+   Append to css/styles.css. Uses existing --brass-bright variable;
+   assumes a dark theme with a slightly lighter panel background inside
+   .community-panel. Adjust the two fallback colors below if your actual
+   tokens differ β€” I haven't seen the full :root variable list.
+   ========================================================================== */
+
+.project-submit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-top: 1.5rem;
+  max-width: 560px;
+}
+
+.project-submit-form label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #A9B3C9; /* matches the ring-text muted color used on index.html */
+  margin-bottom: -0.6rem;
+}
+
+.project-submit-form input,
+.project-submit-form textarea {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(169, 179, 201, 0.25);
+  border-radius: 8px;
+  padding: 0.75rem 0.9rem;
+  color: #EDEFF4;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.project-submit-form input::placeholder,
+.project-submit-form textarea::placeholder {
+  color: rgba(169, 179, 201, 0.55);
+}
+
+.project-submit-form input:focus,
+.project-submit-form textarea:focus {
+  outline: none;
+  border-color: var(--brass-bright);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.project-submit-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.project-submit-form button.btn-primary {
+  align-self: flex-start;
+  margin-top: 0.4rem;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+
+.form-note {
+  font-size: 0.85rem;
+  color: #A9B3C9;
+  line-height: 1.5;
+}
+
+.form-note a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Lesson outline grid reuses .security-stats / .stat β€” no new rules needed
+   there, but if lesson count ever exceeds 4 on small screens, confirm
+   .security-stats wraps properly (it should, per the homepage layout). */

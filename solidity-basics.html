@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solidity Basics β€” GradLearn | GradToken</title>
+<meta name="description" content="GradLearn: Solidity Basics. Learn core Solidity concepts, then prove it by deploying and verifying your own contract on Sepolia testnet.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="nav">
+  <div class="wrap">
+    <a href="index.html" class="nav-mark">GradToken<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="how-it-works.html">How it works</a></li>
+      <li><a href="tokenomics.html">Tokenomics</a></li>
+      <li><a href="roadmap.html">Roadmap</a></li>
+      <li><a href="security.html">Security</a></li>
+      <li><a href="community.html">Community</a></li>
+    </ul>
+    <a class="nav-cta" href="security.html">View Verified Contracts</a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="how-it-works.html">How it works</a>
+    <a href="tokenomics.html">Tokenomics</a>
+    <a href="roadmap.html">Roadmap</a>
+    <a href="security.html">Security</a>
+    <a href="community.html">Community</a>
+  </div>
+</nav>
+
+<main id="main">
+
+  <header class="hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">GradLearn Β· Course 1 of 13</span>
+        <h1>Solidity Basics.<br>Prove it, don't just <em>pass</em> it.</h1>
+        <p class="lede">Learn the core building blocks of Solidity β€” variables, functions, mappings, and control flow β€” then complete the course by deploying and verifying your own contract on Sepolia testnet. No quiz. Real proof.</p>
+        <div class="hero-ctas">
+          <a class="btn-primary" href="#project">
+            Jump to the final project
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn-ghost" href="#lessons">See the lesson outline</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="lessons">
+    <div class="wrap reveal">
+      <div class="section-head">
+        <span class="section-eyebrow">What you'll learn</span>
+        <h2>Four lessons. No fluff.</h2>
+        <p>Each lesson is short and hands-on. Lesson content below is a placeholder outline β€” full lesson pages are next in the build queue.</p>
+      </div>
+      <div class="security-stats">
+        <div class="stat">
+          <div class="n">01</div>
+          <div class="l">Solidity syntax, types, and state variables</div>
+        </div>
+        <div class="stat">
+          <div class="n">02</div>
+          <div class="l">Functions, modifiers, and visibility</div>
+        </div>
+        <div class="stat">
+          <div class="n">03</div>
+          <div class="l">Mappings, structs, and events</div>
+        </div>
+        <div class="stat">
+          <div class="n">04</div>
+          <div class="l">Deploying and verifying on Sepolia</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="project">
+    <div class="wrap reveal">
+      <div class="section-head">
+        <span class="section-eyebrow">Final project</span>
+        <h2>Deploy &amp; verify a contract</h2>
+        <p>This is pass/fail, not scored. Write your own contract β€” not a copy of the lesson examples β€” deploy it to Sepolia, and verify it on Etherscan.</p>
+      </div>
+
+      <div class="community-panel">
+        <h2>1. Pick one to build</h2>
+        <p>A simplified token, a counter or voting contract, or a basic escrow/piggy-bank contract. Keep it small and yours.</p>
+
+        <h2 style="margin-top:2rem;">2. What passes</h2>
+        <p>Contract deployed to Sepolia and verified on Etherscan, isn't an unmodified lesson example, and your write-up correctly describes what it does plus one design decision you made.</p>
+
+        <h2 style="margin-top:2rem;">3. Submit</h2>
+        <form action="mailto:victorichies20@gmail.com" method="post" enctype="text/plain" class="project-submit-form">
+          <label for="wallet">Wallet address</label>
+          <input type="text" id="wallet" name="wallet" placeholder="0x..." required>
+
+          <label for="etherscan">Verified Etherscan link</label>
+          <input type="url" id="etherscan" name="etherscan_link" placeholder="https://sepolia.etherscan.io/address/0x..." required>
+
+          <label for="repo">GitHub repo (optional)</label>
+          <input type="url" id="repo" name="repo_link" placeholder="https://github.com/...">
+
+          <label for="writeup">Write-up (what it does + one design decision)</label>
+          <textarea id="writeup" name="writeup" maxlength="500" rows="4" required placeholder="This contract..."></textarea>
+
+          <button type="submit" class="btn-primary">Submit for review</button>
+        </form>
+        <p class="form-note" style="margin-top:1rem;">Submitting opens your email client β€” nothing is sent to a third-party server. Prefer to email directly? Send the same details to <a href="mailto:victorichies20@gmail.com" style="color:var(--brass-bright);">victorichies20@gmail.com</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap reveal">
+      <div class="section-head">
+        <span class="section-eyebrow">Your certificate</span>
+        <h2>Anchored to your actual work, not a quiz score.</h2>
+        <p>Once reviewed, your GradLearn certificate for this course will reference your verified contract directly β€” anyone checking it can click through and see the real deployed code. On-chain issuance is coming soon; reviewed submissions will be queued for the first issuance batch.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-mark">GradToken<span class="dot">.</span></div>
+        <p class="footer-tag">Learn-to-earn, verified on-chain. Built in the open, one tested phase at a time.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Project</h4>
+          <a href="how-it-works.html">How it works</a>
+          <a href="tokenomics.html">Tokenomics</a>
+          <a href="roadmap.html">Roadmap</a>
+        </div>
+        <div class="footer-col">
+          <h4>Verify</h4>
+          <a href="security.html">Security &amp; contracts</a>
+          <a href="https://sepolia.etherscan.io/address/0x6441F1F8b50F2149AF69DfEf37eE74C4A31AbEed#code" target="_blank" rel="noopener noreferrer">Etherscan</a>
+        </div>
+        <div class="footer-col">
+          <h4>Community</h4>
+          <a href="community.html">All channels</a>
+          <a href="https://t.me/+I9Klso5akAAzMTFk" target="_blank" rel="noopener noreferrer">Telegram</a>
+          <a href="https://discord.gg/AKAp2nCTQ4" target="_blank" rel="noopener noreferrer">Discord</a>
+          <a href="https://x.com/GradToken" target="_blank" rel="noopener noreferrer">X (Twitter)</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="disclaimer">Sepolia is a public test network. GRAD shown on this page has no monetary value and cannot be bought or sold. Nothing here is financial advice or an offer to sell securities.</p>
+      <span class="copyright">Β© 2026 GradToken</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
