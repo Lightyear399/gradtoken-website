@@ -396,15 +396,6 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 section{ padding: clamp(56px, 8vw, 100px) 0; }
 section.tight{ padding-top: 0; }
 .section-head{ max-width: 640px; margin-bottom: clamp(32px, 5vw, 52px); }
-.section-eyebrow{
-  font-family: var(--font-mono);
-  font-size: 0.76rem;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: var(--brass-bright);
-  margin-bottom: 0.9rem;
-  display: block;
-}
 .section-head h2{
   font-family: var(--font-display);
   font-weight: 600;
@@ -599,7 +590,4 @@ footer{ background: var(--ink-navy-deep); border-top: 1px solid var(--border-on-
 .disclaimer{ font-size: 0.78rem; color: var(--text-on-navy-muted); opacity: 0.75; max-width: 62ch; line-height: 1.5; }
 .copyright{ font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-on-navy-muted); opacity: 0.6; white-space: nowrap; }
 
-/* ---------- Reveal on scroll ---------- */
-.reveal{ opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
-.reveal.is-visible{ opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce){ .reveal{ opacity: 1; transform: none; } }
+
