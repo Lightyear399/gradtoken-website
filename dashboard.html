@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Courses — GradLearn | GradToken</title>
-<meta name="description" content="GradLearn courses: earn GRAD by completing project-based courses, verified on-chain. Start with Solidity Basics.">
+<title>Dashboard — GradToken</title>
+<meta name="description" content="Your GRAD balance, staking position, and course submission status.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="stylesheet" href="css/styles.css">
@@ -17,15 +17,15 @@
     <a href="index.html" class="nav-mark">GradToken<span class="dot">.</span></a>
     <ul class="nav-links">
       <li><a href="how-it-works.html">How it works</a></li>
-      <li><a href="courses.html" aria-current="page">Courses</a></li>
       <li><a href="tokenomics.html">Tokenomics</a></li>
       <li><a href="roadmap.html">Roadmap</a></li>
       <li><a href="security.html">Security</a></li>
+      <li><a href="courses.html">Courses</a></li>
       <li><a href="community.html">Community</a></li>
     </ul>
     <a class="nav-cta" href="security.html">View Verified Contracts</a>
     <div class="wallet-widget">
-      <a href="dashboard.html" id="wallet-dashboard-link" style="display:none;">Dashboard</a>
+      <a href="dashboard.html" id="wallet-dashboard-link" aria-current="page" style="display:none;">Dashboard</a>
       <span id="wallet-status"></span>
       <button id="wallet-connect-btn" class="nav-cta" type="button">Connect Wallet</button>
     </div>
@@ -36,66 +36,60 @@
   <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">Home</a>
     <a href="how-it-works.html">How it works</a>
-    <a href="courses.html">Courses</a>
     <a href="tokenomics.html">Tokenomics</a>
     <a href="roadmap.html">Roadmap</a>
     <a href="security.html">Security</a>
+    <a href="courses.html">Courses</a>
     <a href="community.html">Community</a>
   </div>
 </nav>
 
 <main id="main">
 
-  <header class="hero">
+  <header class="page-header">
     <div class="wrap">
-      <div>
-        <span class="eyebrow">GradLearn</span>
-        <h1>Learn it. Ship it.<br>Earn <em>GRAD</em>.</h1>
-        <p class="lede">Every GradLearn course ends with a real deliverable, not a quiz score. Complete it, and your on-chain certificate points to the actual work — checkable by anyone.</p>
-      </div>
+      <h1>Your dashboard</h1>
+      <p class="lede">GRAD balance, staking position, and where your Solidity Basics submission stands — all read live from Sepolia and your account.</p>
     </div>
   </header>
 
   <section>
     <div class="wrap">
-      <div class="section-head">
-        <h2>Start here</h2>
+
+      <p id="dashboard-loading">Checking wallet connection…</p>
+
+      <div id="dashboard-disconnected" style="display:none;">
+        <p>Connect your wallet using the button in the top navigation to see your balance, staking position, and course progress.</p>
       </div>
 
-      <div class="community-panel">
-        <h2>Solidity Basics</h2>
-        <p>Core Solidity concepts — variables, functions, mappings, control flow — then deploy and verify your own contract on Sepolia to complete the course.</p>
-        <div class="channel-row">
-          <a class="btn-primary" href="solidity-basics.html">Start the course</a>
+      <div id="dashboard-connected" style="display:none;">
+        <div class="security-stats">
+          <div class="stat">
+            <div class="n" id="stat-balance">—</div>
+            <div class="l">GRAD balance</div>
+          </div>
+          <div class="stat">
+            <div class="n" id="stat-staked">—</div>
+            <div class="l">Staked</div>
+          </div>
+          <div class="stat">
+            <div class="n" id="stat-earned">—</div>
+            <div class="l">Pending rewards</div>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <section>
-    <div class="wrap">
-      <div class="section-head">
-        <h2>More courses are in the queue</h2>
-        <p>13 courses are planned across three paths — Web3 Development, Crypto Foundations, and Content &amp; Growth — all following the same project-based model as Solidity Basics: no quiz scores, real deliverables anchored to your certificate.</p>
+        <div class="community-panel" style="margin-top: clamp(32px, 5vw, 52px); text-align: left;">
+          <h2>Solidity Basics submission</h2>
+          <p id="submission-status-text">Loading…</p>
+          <p class="form-note" id="submission-status-detail" style="margin-top: 0.6rem;"></p>
+        </div>
+
+        <p class="form-note" style="margin-top: 1.5rem;">
+          On-chain figures are read directly from the contracts below — you can verify them independently any time.
+          <a href="security.html" style="color: var(--brass-bright);">View verified contracts →</a>
+        </p>
       </div>
-      <div class="security-stats">
-        <div class="stat">
-          <div class="n">01</div>
-          <div class="l">Copywriting — Content &amp; Growth Path</div>
-        </div>
-        <div class="stat">
-          <div class="n">02</div>
-          <div class="l">Intro to Blockchain &amp; Cryptocurrency — Crypto Foundations Path</div>
-        </div>
-        <div class="stat">
-          <div class="n">03</div>
-          <div class="l">Git &amp; GitHub Basics — Web3 Developer Path</div>
-        </div>
-        <div class="stat">
-          <div class="n">04</div>
-          <div class="l">More courses added as each is built and tested</div>
-        </div>
-      </div>
+
     </div>
   </section>
 
@@ -124,19 +118,20 @@
           <h4>Community</h4>
           <a href="community.html">All channels</a>
           <a href="https://t.me/+I9Klso5akAAzMTFk" target="_blank" rel="noopener noreferrer">Telegram</a>
-          <a href="https://discord.gg/AKAp2nCTQ4" target="_blank" rel="noopener noreferrer">Discord</a>
+          <a href="https://discord.gg/XdPfd25N" target="_blank" rel="noopener noreferrer">Discord</a>
           <a href="https://x.com/GradToken" target="_blank" rel="noopener noreferrer">X (Twitter)</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
       <p class="disclaimer">Sepolia is a public test network. GRAD shown on this page has no monetary value and cannot be bought or sold. Nothing here is financial advice or an offer to sell securities.</p>
-      <span class="copyright">Β© 2026 GradToken</span>
+      <span class="copyright">© 2026 GradToken</span>
     </div>
   </div>
 </footer>
 
 <script src="js/main.js"></script>
 <script src="js/wallet-connect.js" defer></script>
+<script src="js/dashboard.js" defer></script>
 </body>
 </html>

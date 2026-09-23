@@ -31,6 +31,7 @@ create table if not exists submissions (
   wallet_address text not null references users(wallet_address),
   course_slug text not null,
   contract_address text not null,
+  repo_url text,
   rationale text not null,
   contract_verified boolean not null default false,
   status text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),

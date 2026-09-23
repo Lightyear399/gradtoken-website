@@ -67,21 +67,21 @@
 }
 
 :root{
-  --ink-navy: #0B1F3A;
-  --ink-navy-deep: #071527;
-  --ink-navy-light: #14294a;
-  --parchment: #F3EEDF;
-  --parchment-dim: #E8E1CC;
-  --brass: #C9A24B;
-  --brass-bright: #E0BC6C;
-  --verdigris: #3E8E75;
-  --verdigris-bright: #55AB8F;
-  --text-on-navy: #E9E4D4;
-  --text-on-navy-muted: #A9B3C9;
-  --text-on-parchment: #16233B;
-  --text-on-parchment-muted: #4A5670;
-  --border-on-navy: rgba(233, 228, 212, 0.14);
-  --border-on-parchment: rgba(22, 35, 59, 0.12);
+  --ink-navy: #131727;
+  --ink-navy-deep: #0e0f22;
+  --ink-navy-light: #1c2137;
+  --parchment: #f8fafc;
+  --parchment-dim: #e2e8f0;
+  --brass: #8a60ff;
+  --brass-bright: #a78bfa;
+  --verdigris: #c359e2;
+  --verdigris-bright: #d98eef;
+  --text-on-navy: #cbd5e1;
+  --text-on-navy-muted: #90a1b9;
+  --text-on-parchment: #131727;
+  --text-on-parchment-muted: #475569;
+  --border-on-navy: rgba(248, 250, 252, 0.12);
+  --border-on-parchment: rgba(19, 23, 39, 0.12);
 
   --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'Work Sans', -apple-system, sans-serif;
@@ -198,6 +198,32 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   flex-shrink: 0;
 }
 .nav-cta:hover{ background: var(--brass); color: var(--ink-navy-deep); }
+
+.wallet-widget{ display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
+#wallet-dashboard-link{
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--brass-bright);
+  text-decoration: none;
+  white-space: nowrap;
+}
+#wallet-dashboard-link:hover{ text-decoration: underline; }
+#wallet-status{
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-on-navy-muted);
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.wallet-widget .nav-cta[disabled]{ opacity: 0.6; cursor: default; }
+
+@media (max-width: 640px){
+  /* "Security" is already in the mobile menu, so drop this pill on
+     narrow screens to leave room for the wallet button. */
+  .nav > .wrap > a.nav-cta{ display: none; }
+}
 
 .nav-toggle{
   display: none;
@@ -503,8 +529,8 @@ section.tight{ padding-top: 0; }
 .phase-num .yr{ display: block; color: var(--brass-bright); font-size: 0.78rem; margin-top: 0.3rem; }
 .phase-body h3{ font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--parchment); margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; }
 .status-pill{ font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.28rem 0.65rem; border-radius: 20px; border: 1px solid; }
-.status-pill.active{ color: var(--verdigris-bright); border-color: var(--verdigris); background: rgba(62,142,117,0.1); }
-.status-pill.next{ color: var(--brass-bright); border-color: var(--brass); background: rgba(201,162,75,0.08); }
+.status-pill.active{ color: var(--verdigris-bright); border-color: var(--verdigris); background: rgba(195,89,226,0.12); }
+.status-pill.next{ color: var(--brass-bright); border-color: var(--brass); background: rgba(138,96,255,0.1); }
 .status-pill.later{ color: var(--text-on-navy-muted); border-color: var(--border-on-navy); }
 .phase-items{ list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.5rem 1.5rem; }
 .phase-items li{ font-size: 0.92rem; color: var(--text-on-navy-muted); display: flex; gap: 0.55rem; align-items: flex-start; }

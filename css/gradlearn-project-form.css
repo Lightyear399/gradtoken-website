@@ -19,17 +19,17 @@
   font-size: 0.78rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #A9B3C9; /* matches the ring-text muted color used on index.html */
+  color: #90a1b9; /* matches the ring-text muted color used on index.html */
   margin-bottom: -0.6rem;
 }
 
 .project-submit-form input,
 .project-submit-form textarea {
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(169, 179, 201, 0.25);
+  border: 1px solid rgba(144, 161, 185, 0.25);
   border-radius: 8px;
   padding: 0.75rem 0.9rem;
-  color: #EDEFF4;
+  color: #f8fafc;
   font-family: inherit;
   font-size: 0.95rem;
   transition: border-color 0.15s ease, background 0.15s ease;
@@ -37,7 +37,7 @@
 
 .project-submit-form input::placeholder,
 .project-submit-form textarea::placeholder {
-  color: rgba(169, 179, 201, 0.55);
+  color: rgba(144, 161, 185, 0.55);
 }
 
 .project-submit-form input:focus,
@@ -62,7 +62,7 @@
 
 .form-note {
   font-size: 0.85rem;
-  color: #A9B3C9;
+  color: #90a1b9;
   line-height: 1.5;
 }
 

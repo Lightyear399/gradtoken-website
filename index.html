@@ -24,6 +24,11 @@
       <li><a href="community.html">Community</a></li>
     </ul>
     <a class="nav-cta" href="security.html">View Verified Contracts</a>
+    <div class="wallet-widget">
+      <a href="dashboard.html" id="wallet-dashboard-link" style="display:none;">Dashboard</a>
+      <span id="wallet-status"></span>
+      <button id="wallet-connect-btn" class="nav-cta" type="button">Connect Wallet</button>
+    </div>
     <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle menu">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
@@ -62,7 +67,7 @@
             <defs>
               <path id="ringPath" d="M 110,110 m -92,0 a 92,92 0 1,1 184,0 a 92,92 0 1,1 -184,0"/>
             </defs>
-            <text font-family="IBM Plex Mono, monospace" font-size="10.2" letter-spacing="3" fill="#A9B3C9">
+            <text font-family="IBM Plex Mono, monospace" font-size="10.2" letter-spacing="3" fill="#90a1b9">
               <textPath href="#ringPath" startOffset="0%">SEPOLIA TESTNET • VERIFIED SOURCE • 6 OF 6 CONTRACTS • 39 TESTS PASSING • </textPath>
             </text>
           </svg>
@@ -161,5 +166,6 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script src="js/wallet-connect.js" defer></script>
 </body>
 </html>

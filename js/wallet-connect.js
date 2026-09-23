@@ -93,18 +93,21 @@
   function wireUpUI() {
     const btn = document.getElementById("wallet-connect-btn");
     const status = document.getElementById("wallet-status");
+    const dashLink = document.getElementById("wallet-dashboard-link");
     if (!btn || !status) return; // page doesn't have the widget, nothing to do
 
     function renderConnected(address) {
       btn.textContent = "Disconnect";
       status.textContent = shortAddress(address);
       status.title = address;
+      if (dashLink) dashLink.style.display = "";
     }
 
     function renderDisconnected() {
       btn.textContent = "Connect Wallet";
       status.textContent = "";
       status.title = "";
+      if (dashLink) dashLink.style.display = "none";
     }
 
     btn.addEventListener("click", async () => {

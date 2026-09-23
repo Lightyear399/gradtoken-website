@@ -48,7 +48,7 @@ exports.handler = async (event) => {
     return json(400, { error: "Invalid JSON body" });
   }
 
-  const { course, contractAddress, rationale } = body;
+  const { course, contractAddress, repoUrl, rationale } = body;
   if (!course || !contractAddress || !ethers.isAddress(contractAddress) || !rationale) {
     return json(400, {
       error: "course, a valid contractAddress, and rationale are all required",
@@ -70,6 +70,7 @@ exports.handler = async (event) => {
     wallet_address: address,
     course_slug: course,
     contract_address: contractAddress,
+    repo_url: repoUrl || null,
     rationale,
     contract_verified: verified,
     status: "pending", // human review always required, even if verified === true
