@@ -67,21 +67,21 @@
 }
 
 :root{
-  --ink-navy: #131727;
-  --ink-navy-deep: #0e0f22;
-  --ink-navy-light: #1c2137;
-  --parchment: #f8fafc;
-  --parchment-dim: #e2e8f0;
-  --brass: #8a60ff;
-  --brass-bright: #a78bfa;
-  --verdigris: #c359e2;
-  --verdigris-bright: #d98eef;
-  --text-on-navy: #cbd5e1;
-  --text-on-navy-muted: #90a1b9;
-  --text-on-parchment: #131727;
-  --text-on-parchment-muted: #475569;
-  --border-on-navy: rgba(248, 250, 252, 0.12);
-  --border-on-parchment: rgba(19, 23, 39, 0.12);
+  --ink-navy: #0B1F3A;
+  --ink-navy-deep: #071527;
+  --ink-navy-light: #14294a;
+  --parchment: #F3EEDF;
+  --parchment-dim: #E8E1CC;
+  --brass: #C9A24B;
+  --brass-bright: #E0BC6C;
+  --verdigris: #3E8E75;
+  --verdigris-bright: #55AB8F;
+  --text-on-navy: #E9E4D4;
+  --text-on-navy-muted: #A9B3C9;
+  --text-on-parchment: #16233B;
+  --text-on-parchment-muted: #4A5670;
+  --border-on-navy: rgba(233, 228, 212, 0.14);
+  --border-on-parchment: rgba(22, 35, 59, 0.12);
 
   --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'Work Sans', -apple-system, sans-serif;
@@ -219,11 +219,10 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .wallet-widget .nav-cta[disabled]{ opacity: 0.6; cursor: default; }
 
-@media (max-width: 640px){
-  /* "Security" is already in the mobile menu, so drop this pill on
-     narrow screens to leave room for the wallet button. */
-  .nav > .wrap > a.nav-cta{ display: none; }
-}
+/* "View Verified Contracts" duplicates the "Security" nav link, and with
+   the wallet widget now sharing this row, keeping both crowds the nav at
+   nearly every width. Drop the pill outright rather than only on mobile. */
+.nav > .wrap > a.nav-cta{ display: none; }
 
 .nav-toggle{
   display: none;
