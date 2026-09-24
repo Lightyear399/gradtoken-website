@@ -5,9 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tokenomics — GradToken</title>
 <meta name="description" content="GRAD's fixed 1,000,000,000 supply, allocation breakdown, and vesting schedules — enforced on-chain, verifiable on Sepolia Etherscan.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; manifest-src 'self'; worker-src 'self'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="stylesheet" href="css/styles.css">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0B1F3A">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
 </head>
 <body>
 
@@ -25,6 +30,7 @@
     </ul>
     <a class="nav-cta" href="security.html">View Verified Contracts</a>
     <div class="wallet-widget">
+      <button id="pwa-install-btn" class="nav-cta" type="button" style="display:none;">Install app</button>
       <a href="dashboard.html" id="wallet-dashboard-link" style="display:none;">Dashboard</a>
       <span id="wallet-status"></span>
       <button id="wallet-connect-btn" class="nav-cta" type="button">Connect Wallet</button>
@@ -41,6 +47,7 @@
     <a href="security.html">Security</a>
     <a href="courses.html">Courses</a>
     <a href="community.html">Community</a>
+    <a href="dashboard.html">Dashboard</a>
   </div>
 </nav>
 
@@ -161,5 +168,6 @@
 
 <script src="js/main.js"></script>
 <script src="js/wallet-connect.js" defer></script>
+<script src="js/pwa-register.js" defer></script>
 </body>
 </html>

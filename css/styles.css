@@ -151,7 +151,11 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 76px;
+  min-height: 76px;
+  flex-wrap: wrap;
+  gap: 0.5rem 0;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
 }
 .nav-mark{
   font-family: var(--font-display);
@@ -260,6 +264,14 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   .nav-links{ display: none; }
   .nav-toggle{ display: flex; }
   .mobile-menu.is-open{ display: flex; }
+  /* The top-bar wallet widget has no room next to the logo and hamburger
+     on a phone. Keep only the Connect/Disconnect button visible there;
+     the address text and the Dashboard shortcut move into the mobile
+     menu instead (added as a plain link in the markup). The !important
+     is required because wallet-connect.js sets this link's inline
+     display style directly when a session is detected. */
+  #wallet-dashboard-link{ display: none !important; }
+  #wallet-status{ display: none; }
 }
 
 /* ---------- Page header (non-hero pages) ---------- */
