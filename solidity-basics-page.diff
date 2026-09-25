@@ -1,0 +1,151 @@
+diff --git a/css/gradlearn-project-form.css b/css/gradlearn-project-form.css
+deleted file mode 100644
+index 4dff893..0000000
+--- a/css/gradlearn-project-form.css
++++ /dev/null
+@@ -1,76 +0,0 @@
+-/* ==========================================================================
+-   GradLearn: Project Submission Form
+-   Append to css/styles.css. Uses existing --brass-bright variable;
+-   assumes a dark theme with a slightly lighter panel background inside
+-   .community-panel. Adjust the two fallback colors below if your actual
+-   tokens differ β€” I haven't seen the full :root variable list.
+-   ========================================================================== */
+-
+-.project-submit-form {
+-  display: flex;
+-  flex-direction: column;
+-  gap: 1.1rem;
+-  margin-top: 1.5rem;
+-  max-width: 560px;
+-}
+-
+-.project-submit-form label {
+-  font-family: "IBM Plex Mono", monospace;
+-  font-size: 0.78rem;
+-  letter-spacing: 0.06em;
+-  text-transform: uppercase;
+-  color: #90a1b9; /* matches the ring-text muted color used on index.html */
+-  margin-bottom: -0.6rem;
+-}
+-
+-.project-submit-form input,
+-.project-submit-form textarea {
+-  background: rgba(255, 255, 255, 0.04);
+-  border: 1px solid rgba(144, 161, 185, 0.25);
+-  border-radius: 8px;
+-  padding: 0.75rem 0.9rem;
+-  color: #f8fafc;
+-  font-family: inherit;
+-  font-size: 0.95rem;
+-  transition: border-color 0.15s ease, background 0.15s ease;
+-}
+-
+-.project-submit-form input::placeholder,
+-.project-submit-form textarea::placeholder {
+-  color: rgba(144, 161, 185, 0.55);
+-}
+-
+-.project-submit-form input:focus,
+-.project-submit-form textarea:focus {
+-  outline: none;
+-  border-color: var(--brass-bright);
+-  background: rgba(255, 255, 255, 0.06);
+-}
+-
+-.project-submit-form textarea {
+-  resize: vertical;
+-  min-height: 100px;
+-}
+-
+-.project-submit-form button.btn-primary {
+-  align-self: flex-start;
+-  margin-top: 0.4rem;
+-  cursor: pointer;
+-  border: none;
+-  font-family: inherit;
+-}
+-
+-.form-note {
+-  font-size: 0.85rem;
+-  color: #90a1b9;
+-  line-height: 1.5;
+-}
+-
+-.form-note a {
+-  text-decoration: underline;
+-  text-underline-offset: 2px;
+-}
+-
+-/* Lesson outline grid reuses .security-stats / .stat β€” no new rules needed
+-   there, but if lesson count ever exceeds 4 on small screens, confirm
+-   .security-stats wraps properly (it should, per the homepage layout). */
+diff --git a/css/styles.css b/css/styles.css
+index 403225d..24001bd 100644
+--- a/css/styles.css
++++ b/css/styles.css
+@@ -627,4 +627,20 @@ footer{ background: var(--ink-navy-deep); border-top: 1px solid var(--border-on-
+ .disclaimer{ font-size: 0.78rem; color: var(--text-on-navy-muted); opacity: 0.75; max-width: 62ch; line-height: 1.5; }
+ .copyright{ font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-on-navy-muted); opacity: 0.6; white-space: nowrap; }
+ 
++/* ---------- GradLearn: project submission form ---------- */
++.project-submit-form{ display: flex; flex-direction: column; gap: 1.1rem; margin-top: 1.5rem; max-width: 560px; margin-left: auto; margin-right: auto; text-align: left; }
++.project-submit-form label{ font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-on-navy-muted); margin-bottom: -0.6rem; }
++.project-submit-form input,
++.project-submit-form textarea{ background: rgba(233, 228, 212, 0.04); border: 1px solid var(--border-on-navy); border-radius: 8px; padding: 0.75rem 0.9rem; color: var(--text-on-navy); font-family: inherit; font-size: 0.95rem; transition: border-color 0.15s ease, background 0.15s ease; }
++.project-submit-form input::placeholder,
++.project-submit-form textarea::placeholder{ color: var(--text-on-navy-muted); opacity: 0.7; }
++.project-submit-form input:focus,
++.project-submit-form textarea:focus{ outline: none; border-color: var(--brass-bright); background: rgba(233, 228, 212, 0.06); }
++.project-submit-form input[readonly]{ opacity: 0.7; cursor: default; }
++.project-submit-form textarea{ resize: vertical; min-height: 100px; }
++.project-submit-form button.btn-primary{ align-self: flex-start; margin-top: 0.4rem; cursor: pointer; border: none; font-family: inherit; }
++.project-submit-form button.btn-primary[disabled]{ opacity: 0.6; cursor: default; transform: none; }
++.form-note{ font-size: 0.85rem; color: var(--text-on-navy-muted); line-height: 1.5; text-align: left; }
++.form-note a{ text-decoration: underline; text-underline-offset: 2px; }
++
+ 
+diff --git a/solidity-basics.html b/solidity-basics.html
+index fbc95ae..ce8bfcd 100644
+--- a/solidity-basics.html
++++ b/solidity-basics.html
+@@ -22,6 +22,7 @@
+     <a href="index.html" class="nav-mark">GradToken<span class="dot">.</span></a>
+     <ul class="nav-links">
+       <li><a href="how-it-works.html">How it works</a></li>
++      <li><a href="courses.html" aria-current="page">Courses</a></li>
+       <li><a href="tokenomics.html">Tokenomics</a></li>
+       <li><a href="roadmap.html">Roadmap</a></li>
+       <li><a href="security.html">Security</a></li>
+@@ -41,6 +42,7 @@
+   <div class="mobile-menu" id="mobileMenu">
+     <a href="index.html">Home</a>
+     <a href="how-it-works.html">How it works</a>
++    <a href="courses.html" aria-current="page">Courses</a>
+     <a href="tokenomics.html">Tokenomics</a>
+     <a href="roadmap.html">Roadmap</a>
+     <a href="security.html">Security</a>
+@@ -110,7 +112,7 @@
+         <p>Contract deployed to Sepolia and verified on Etherscan, isn't an unmodified lesson example, and your write-up correctly describes what it does plus one design decision you made.</p>
+ 
+         <h2 style="margin-top:2rem;">3. Submit</h2>
+-        <form action="mailto:victorichies20@gmail.com" method="post" enctype="text/plain" class="project-submit-form" id="project-submit-form">
++        <form action="mailto:gradtokenofficial@gmail.com" method="post" enctype="text/plain" class="project-submit-form" id="project-submit-form">
+           <label for="wallet">Wallet address</label>
+           <input type="text" id="wallet" name="wallet" placeholder="0x... (auto-filled once you connect your wallet)" required>
+ 
+@@ -121,12 +123,12 @@
+           <input type="url" id="repo" name="repo_link" placeholder="https://github.com/...">
+ 
+           <label for="writeup">Write-up (what it does + one design decision)</label>
+-          <textarea id="writeup" name="writeup" maxlength="500" rows="4" required placeholder="This contract..."></textarea>
++          <textarea id="writeup" name="writeup" minlength="50" maxlength="500" rows="4" required placeholder="This contract..."></textarea>
+ 
+           <button type="submit" class="btn-primary" id="project-submit-btn">Submit for review</button>
+           <p id="project-submit-feedback" class="form-note" style="margin-top:0.75rem;"></p>
+         </form>
+-        <p class="form-note" style="margin-top:1rem;">Connected wallet submissions go straight to review, with contract verification checked automatically. Prefer not to connect a wallet? Fill in the form above and it'll open your email client to <a href="mailto:victorichies20@gmail.com" style="color:var(--brass-bright);">victorichies20@gmail.com</a> instead.</p>
++        <p class="form-note" style="margin-top:1rem;">Connected wallet submissions go straight to review, with contract verification checked automatically. Prefer not to connect a wallet? Fill in the form above and it'll open your email client to <a href="mailto:gradtokenofficial@gmail.com" style="color:var(--brass-bright);">gradtokenofficial@gmail.com</a> instead.</p>
+       </div>
+     </div>
+   </section>
