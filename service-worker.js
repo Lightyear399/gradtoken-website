@@ -9,14 +9,20 @@
 // Cache strategy:
 //   - HTML navigations: network-first, falling back to cache when offline
 //     (so a returning visitor always gets the freshest page when online).
-//   - CSS/JS/fonts/icons: cache-first (rarely change, load instantly).
+//   - CSS/JS/fonts/icons: stale-while-revalidate — the cached copy is
+//     returned immediately for speed, but every request also triggers a
+//     background fetch that updates the cache for NEXT time. This means a
+//     CSS/JS change ships to already-installed users within one extra
+//     reload, without depending on anyone remembering to bump
+//     CACHE_VERSION for every small edit (a plain cache-first strategy
+//     silently went stale across several deploys before this was added).
 //   - Everything else (including all /.netlify/functions/* calls): not
 //     intercepted at all — normal network request, browser's own rules.
 //
-// Bump CACHE_VERSION whenever the precached file list below changes, so
-// returning visitors pick up the new shell instead of a stale one.
+// Still bump CACHE_VERSION when the PRECACHE_URLS list itself changes
+// (a file added/removed), so the initial install fetches the right set.
 
-const CACHE_VERSION = "gradtoken-shell-v1";
+const CACHE_VERSION = "gradtoken-shell-v2";
 
 const PRECACHE_URLS = [
   "/index.html",
@@ -101,15 +107,20 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Cache-first for static assets (css/js/fonts/icons).
+  // Stale-while-revalidate for static assets (css/js/fonts/icons): serve
+  // the cached copy instantly if there is one, but always also fetch in
+  // the background and overwrite the cache for the next request. If
+  // there's no cached copy yet, fall back to waiting on the network.
   event.respondWith(
     caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request).then((response) => {
-        const copy = response.clone();
-        caches.open(CACHE_VERSION).then((cache) => cache.put(event.request, copy));
-        return response;
-      });
+      const networkFetch = fetch(event.request)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE_VERSION).then((cache) => cache.put(event.request, copy));
+          return response;
+        })
+        .catch(() => null);
+      return cached || networkFetch;
     })
   );
 });

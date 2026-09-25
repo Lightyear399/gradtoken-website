@@ -22,11 +22,25 @@
   let deferredPrompt = null;
   const installBtn = document.getElementById("pwa-install-btn");
 
-  window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
-    deferredPrompt = event;
-    if (installBtn) installBtn.style.display = "";
-  });
+  function isRunningInstalled() {
+    // Covers Android/desktop (display-mode: standalone) and iOS Safari's
+    // older (navigator.standalone) signal. If either is true, this IS the
+    // installed app — there's nothing to prompt.
+    return (
+      window.matchMedia("(display-mode: standalone)").matches ||
+      window.navigator.standalone === true
+    );
+  }
+
+  if (installBtn && isRunningInstalled()) {
+    installBtn.style.display = "none";
+  } else {
+    window.addEventListener("beforeinstallprompt", (event) => {
+      event.preventDefault();
+      deferredPrompt = event;
+      if (installBtn) installBtn.style.display = "";
+    });
+  }
 
   if (installBtn) {
     installBtn.addEventListener("click", async () => {
