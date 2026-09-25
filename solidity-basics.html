@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Solidity Basics — GradLearn | GradToken</title>
 <meta name="description" content="GradLearn: Solidity Basics. Learn core Solidity concepts, then prove it by deploying and verifying your own contract on Sepolia testnet.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; manifest-src 'self'; worker-src 'self'; form-action 'self' mailto:">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' wss://relay.walletconnect.org; object-src 'none'; base-uri 'self'; manifest-src 'self'; worker-src 'self'; form-action 'self' mailto:">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="stylesheet" href="css/styles.css">
 <link rel="manifest" href="/manifest.json">
@@ -22,7 +22,6 @@
     <a href="index.html" class="nav-mark">GradToken<span class="dot">.</span></a>
     <ul class="nav-links">
       <li><a href="how-it-works.html">How it works</a></li>
-      <li><a href="courses.html" aria-current="page">Courses</a></li>
       <li><a href="tokenomics.html">Tokenomics</a></li>
       <li><a href="roadmap.html">Roadmap</a></li>
       <li><a href="security.html">Security</a></li>
@@ -42,7 +41,6 @@
   <div class="mobile-menu" id="mobileMenu">
     <a href="index.html">Home</a>
     <a href="how-it-works.html">How it works</a>
-    <a href="courses.html" aria-current="page">Courses</a>
     <a href="tokenomics.html">Tokenomics</a>
     <a href="roadmap.html">Roadmap</a>
     <a href="security.html">Security</a>
@@ -112,7 +110,7 @@
         <p>Contract deployed to Sepolia and verified on Etherscan, isn't an unmodified lesson example, and your write-up correctly describes what it does plus one design decision you made.</p>
 
         <h2 style="margin-top:2rem;">3. Submit</h2>
-        <form action="mailto:gradtokenofficial@gmail.com" method="post" enctype="text/plain" class="project-submit-form" id="project-submit-form">
+        <form action="mailto:victorichies20@gmail.com" method="post" enctype="text/plain" class="project-submit-form" id="project-submit-form">
           <label for="wallet">Wallet address</label>
           <input type="text" id="wallet" name="wallet" placeholder="0x... (auto-filled once you connect your wallet)" required>
 
@@ -123,12 +121,12 @@
           <input type="url" id="repo" name="repo_link" placeholder="https://github.com/...">
 
           <label for="writeup">Write-up (what it does + one design decision)</label>
-          <textarea id="writeup" name="writeup" minlength="50" maxlength="500" rows="4" required placeholder="This contract..."></textarea>
+          <textarea id="writeup" name="writeup" maxlength="500" rows="4" required placeholder="This contract..."></textarea>
 
           <button type="submit" class="btn-primary" id="project-submit-btn">Submit for review</button>
           <p id="project-submit-feedback" class="form-note" style="margin-top:0.75rem;"></p>
         </form>
-        <p class="form-note" style="margin-top:1rem;">Connected wallet submissions go straight to review, with contract verification checked automatically. Prefer not to connect a wallet? Fill in the form above and it'll open your email client to <a href="mailto:gradtokenofficial@gmail.com" style="color:var(--brass-bright);">gradtokenofficial@gmail.com</a> instead.</p>
+        <p class="form-note" style="margin-top:1rem;">Connected wallet submissions go straight to review, with contract verification checked automatically. Prefer not to connect a wallet? Fill in the form above and it'll open your email client to <a href="mailto:victorichies20@gmail.com" style="color:var(--brass-bright);">victorichies20@gmail.com</a> instead.</p>
       </div>
     </div>
   </section>
@@ -180,6 +178,7 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script src="js/walletconnect-bundle.js" defer></script>
 <script src="js/wallet-connect.js" defer></script>
 <script src="js/project-submit-form.js" defer></script>
 <script src="js/pwa-register.js" defer></script>

@@ -627,4 +627,32 @@ footer{ background: var(--ink-navy-deep); border-top: 1px solid var(--border-on-
 .disclaimer{ font-size: 0.78rem; color: var(--text-on-navy-muted); opacity: 0.75; max-width: 62ch; line-height: 1.5; }
 .copyright{ font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-on-navy-muted); opacity: 0.6; white-space: nowrap; }
 
+/* ---------- WalletConnect modal (mobile / no-extension fallback) ---------- */
+.wc-modal-overlay{
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(7, 21, 39, 0.82);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+}
+.wc-modal{
+  background: var(--ink-navy-light);
+  border: 1px solid var(--border-on-navy);
+  border-radius: 14px;
+  padding: clamp(24px, 5vw, 36px);
+  max-width: 320px;
+  width: 100%;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 1rem;
+}
+.wc-modal-heading{ font-family: var(--font-display); font-size: 1.1rem; color: var(--parchment); }
+.wc-modal-qr{ border-radius: 8px; background: #fff; padding: 8px; }
+.wc-modal-open-app{ width: 100%; text-align: center; text-decoration: none; }
+.wc-modal-or{ font-size: 0.8rem; color: var(--text-on-navy-muted); }
+.wc-modal-close{
+  background: none; border: none; color: var(--text-on-navy-muted);
+  font-family: var(--font-mono); font-size: 0.8rem; text-decoration: underline;
+  cursor: pointer; padding: 0.3rem;
+}
+.wc-modal-close:hover{ color: var(--text-on-navy); }
+
 

@@ -22,7 +22,7 @@
 // Still bump CACHE_VERSION when the PRECACHE_URLS list itself changes
 // (a file added/removed), so the initial install fetches the right set.
 
-const CACHE_VERSION = "gradtoken-shell-v2";
+const CACHE_VERSION = "gradtoken-shell-v3";
 
 const PRECACHE_URLS = [
   "/index.html",
@@ -38,6 +38,7 @@ const PRECACHE_URLS = [
   "/css/gradlearn-project-form.css",
   "/js/main.js",
   "/js/wallet-connect.js",
+  "/js/walletconnect-bundle.js",
   "/js/dashboard.js",
   "/js/project-submit-form.js",
   "/manifest.json",

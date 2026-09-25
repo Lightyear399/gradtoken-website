@@ -1,10 +1,14 @@
 // js/wallet-connect.js
 //
-// Deliberately zero dependencies — no ethers/wagmi/web3modal bundle. The
-// only browser API this needs is window.ethereum (injected by MetaMask
-// or any EIP-1193 wallet) and fetch() to our own /.netlify/functions/*
-// endpoints. Self-hosted, same-origin, matches the site's
-// script-src 'self' / connect-src 'self' CSP with no exceptions needed.
+// Two connection paths, tried in order:
+//   1. window.ethereum (MetaMask or any EIP-1193 browser extension) —
+//      zero dependencies, works on desktop.
+//   2. WalletConnect (js/walletconnect-bundle.js, loaded separately) —
+//      the fallback for everywhere an extension can't exist: mobile
+//      browsers and the installed PWA. Shows a QR code / deep link that
+//      hands off to whatever wallet app is on the phone.
+// Both paths end up calling the same fetchNonceMessage/verifySignature
+// functions below, so the backend never needs to know which one was used.
 //
 // Usage: include this on any page with
 //   <button id="wallet-connect-btn">Connect Wallet</button>
@@ -23,15 +27,33 @@
     return n.toLocaleString(undefined, { maximumFractionDigits: 2 });
   }
 
+  // Tracks which connection path is active so signMessage()/logout() can
+  // route to the right place. Extension wallets need nothing tracked
+  // (window.ethereum is always just there); WalletConnect needs its own
+  // session, held inside js/walletconnect-bundle.js, not here.
+  let usingWalletConnect = false;
+
   async function getWalletAddress() {
-    if (!window.ethereum) {
-      throw new Error("No wallet found. Install MetaMask or another Ethereum wallet extension.");
+    if (window.ethereum) {
+      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+      if (!accounts || !accounts.length) {
+        throw new Error("No account was authorized.");
+      }
+      usingWalletConnect = false;
+      return accounts[0];
     }
-    const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-    if (!accounts || !accounts.length) {
-      throw new Error("No account was authorized.");
+
+    // No browser extension (the normal case on mobile — phones don't
+    // support browser extensions at all) — fall back to WalletConnect,
+    // which hands off to whatever wallet app is installed via a QR code
+    // or deep link instead.
+    if (window.GradWC) {
+      const address = await window.GradWC.connect();
+      usingWalletConnect = true;
+      return address;
     }
-    return accounts[0];
+
+    throw new Error("No wallet found, and the WalletConnect fallback failed to load.");
   }
 
   async function fetchNonceMessage(address) {
@@ -42,6 +64,9 @@
   }
 
   async function signMessage(address, message) {
+    if (usingWalletConnect) {
+      return window.GradWC.signMessage(address, message);
+    }
     // personal_sign is plain EIP-1193, no library required.
     return window.ethereum.request({
       method: "personal_sign",
@@ -77,6 +102,10 @@
   }
 
   async function logout() {
+    if (usingWalletConnect && window.GradWC) {
+      await window.GradWC.disconnect().catch(() => {});
+      usingWalletConnect = false;
+    }
     await fetch("/.netlify/functions/auth-logout", { method: "POST" });
   }
 

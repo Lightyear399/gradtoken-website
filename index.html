@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GradToken — Learn-to-Earn, Verified On-Chain</title>
 <meta name="description" content="GradToken is a learn-to-earn ecosystem: earn GRAD by learning through GradLearn, put it to work with GradStake. Contracts tested, penetration-tested, and verified on Sepolia testnet.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; manifest-src 'self'; worker-src 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' wss://relay.walletconnect.org; object-src 'none'; base-uri 'self'; manifest-src 'self'; worker-src 'self'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="stylesheet" href="css/styles.css">
 <link rel="manifest" href="/manifest.json">
@@ -173,6 +173,7 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script src="js/walletconnect-bundle.js" defer></script>
 <script src="js/wallet-connect.js" defer></script>
 <script src="js/pwa-register.js" defer></script>
 </body>
