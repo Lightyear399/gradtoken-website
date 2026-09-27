@@ -151,6 +151,8 @@
         }
       } catch (err) {
         status.textContent = err.message;
+        status.title = err.message; // full text on hover/long-press, since the pill truncates it
+        console.error("Wallet connect failed:", err);
       } finally {
         btn.disabled = false;
       }
