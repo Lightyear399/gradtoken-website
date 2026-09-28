@@ -63,25 +63,25 @@
 </div>
 
 <main id="main">
-  <div id="gate-locked" class="gate-locked" style="display:none;">
+  <div id="gate-locked" class="gate-locked" hidden>
     <div class="wrap">
       <div class="gate-locked-panel">
         <span class="eyebrow">Locked</span>
         <h2>Not yet.</h2>
-        <p id="gate-locked-message" class="form-note" style="font-size:1rem;"></p>
+        <p id="gate-locked-message" class="form-note gate-msg"></p>
         <button class="btn-primary" id="gate-recheck-btn" type="button">Check again</button>
       </div>
     </div>
   </div>
 
-  <div id="gate-content" style="display:none;">
+  <div id="gate-content" hidden>
     <header class="hero">
       <div class="wrap">
         <div>
           <span class="eyebrow">GradLearn · Solidity Basics · Mission 03</span>
           <h1>Mission 03 — Build the Student Registry</h1>
           <p class="lede">Lesson 3: Mappings, Structs, Events &amp; Data Locations</p>
-          <p class="lede" style="font-size:0.95rem;">Dependency: Lessons 1–2: variables, functions, msg.sender, modifiers, constructors.</p>
+          <p class="lede lede-sm">Dependency: Lessons 1–2: variables, functions, msg.sender, modifiers, constructors.</p>
           <ul class="lesson-objectives">
 <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> store data per address with mappings, and explain their default-value behavior</li>
 <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> group related data with structs</li>
@@ -294,7 +294,7 @@ function rename(string calldata newName) external {
 <p>Boss test (Remix VM, screenshot each):</p>
 <ul><li>Student registers with a valid name → succeeds, event in logs</li><li>Student registers with "" → reverts</li><li>Student registers twice → second call reverts</li><li>Non-owner updates a score → reverts</li><li>Owner updates an enrolled student's score → succeeds, event shows old and new score</li><li>Owner updates an unregistered address → reverts</li><li>Student deregisters → enrolled becomes false, event emitted</li></ul>
 <div class="lesson-callout">Design question to answer in writing: After deregister, should the student be allowed to register again? Should their old score be kept? Explain your choice.</div>
-<h4 style="color:var(--parchment); font-family:var(--font-display); font-size:1.05rem; margin: 1.6rem 0 0.4rem;">Lesson 3 completion criteria</h4>
+<h4 class="boss-heading">Lesson 3 completion criteria</h4>
 <ul class="boss-checklist" data-mission="mission-03">
 <li><input type="checkbox" value="item-0" id="boss-item-0"><label for="boss-item-0">Struct and mapping correctly declared</label></li>
 <li><input type="checkbox" value="item-1" id="boss-item-1"><label for="boss-item-1">Registration uses calldata and proper string validation</label></li>

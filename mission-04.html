@@ -63,25 +63,25 @@
 </div>
 
 <main id="main">
-  <div id="gate-locked" class="gate-locked" style="display:none;">
+  <div id="gate-locked" class="gate-locked" hidden>
     <div class="wrap">
       <div class="gate-locked-panel">
         <span class="eyebrow">Locked</span>
         <h2>Not yet.</h2>
-        <p id="gate-locked-message" class="form-note" style="font-size:1rem;"></p>
+        <p id="gate-locked-message" class="form-note gate-msg"></p>
         <button class="btn-primary" id="gate-recheck-btn" type="button">Check again</button>
       </div>
     </div>
   </div>
 
-  <div id="gate-content" style="display:none;">
+  <div id="gate-content" hidden>
     <header class="hero">
       <div class="wrap">
         <div>
           <span class="eyebrow">GradLearn · Solidity Basics · Mission 04</span>
           <h1>Mission 04 — Put It On-Chain</h1>
           <p class="lede">Lesson 4: Testing, Deploying &amp; Verifying on Sepolia</p>
-          <p class="lede" style="font-size:0.95rem;">Dependency: Lessons 1–3, and a working Mission 02 or Mission 03 contract.</p>
+          <p class="lede lede-sm">Dependency: Lessons 1–3, and a working Mission 02 or Mission 03 contract.</p>
           <ul class="lesson-objectives">
 <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> write automated tests covering success paths and failure paths</li>
 <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> explain what deployment, testnets and verification actually are</li>
@@ -309,7 +309,7 @@ try vault.withdraw(5 ether) {
 <p>Required evidence:</p>
 <ul><li>Test file with passing results screenshot (all green) — at least one happy-path test per state-changing function, at least one failure test per require / revert / modifier</li><li>Successful compile on 0.8.24 (screenshot showing version)</li><li>Sepolia contract address</li><li>Deployment transaction hash</li><li>Verified Sepolia Etherscan URL (green tick visible on Contract tab)</li><li>One write + one read interaction after deployment (transaction hash for the write)</li><li>One write made from Etherscan's Write Contract tab</li><li>Your settings record: compiler version, optimization, EVM version, constructor args</li></ul>
 <div class="lesson-callout">Reflection (3–5 sentences): What did a test catch — or what would it have caught — that manual clicking might have missed?</div>
-<h4 style="color:var(--parchment); font-family:var(--font-display); font-size:1.05rem; margin: 1.6rem 0 0.4rem;">Lesson 4 completion criteria</h4>
+<h4 class="boss-heading">Lesson 4 completion criteria</h4>
 <ul class="boss-checklist" data-mission="mission-04">
 <li><input type="checkbox" value="item-0" id="boss-item-0"><label for="boss-item-0">Automated tests written and all passing, including failure paths</label></li>
 <li><input type="checkbox" value="item-1" id="boss-item-1"><label for="boss-item-1">Contract deployed to Sepolia from a dev wallet</label></li>

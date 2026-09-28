@@ -44,16 +44,16 @@
   function reveal() {
     const content = document.getElementById("gate-content");
     const locked = document.getElementById("gate-locked");
-    if (content) content.style.display = "";
-    if (locked) locked.style.display = "none";
+    if (content) content.hidden = false;
+    if (locked) locked.hidden = true;
   }
 
   function lock(missing, signedIn) {
     const content = document.getElementById("gate-content");
     const locked = document.getElementById("gate-locked");
-    if (content) content.style.display = "none";
+    if (content) content.hidden = true;
     if (!locked) return;
-    locked.style.display = "";
+    locked.hidden = false;
     const msg = document.getElementById("gate-locked-message");
     if (msg) {
       msg.textContent = signedIn

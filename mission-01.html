@@ -63,18 +63,18 @@
 </div>
 
 <main id="main">
-  <div id="gate-locked" class="gate-locked" style="display:none;">
+  <div id="gate-locked" class="gate-locked" hidden>
     <div class="wrap">
       <div class="gate-locked-panel">
         <span class="eyebrow">Locked</span>
         <h2>Not yet.</h2>
-        <p id="gate-locked-message" class="form-note" style="font-size:1rem;"></p>
+        <p id="gate-locked-message" class="form-note gate-msg"></p>
         <button class="btn-primary" id="gate-recheck-btn" type="button">Check again</button>
       </div>
     </div>
   </div>
 
-  <div id="gate-content" style="display:none;">
+  <div id="gate-content" hidden>
     <header class="hero">
       <div class="wrap">
         <div>
@@ -310,7 +310,7 @@ contract Locker {
 }</code></pre></div>
 <p>Submit:</p>
 <ol><li>Your source code</li><li>A screenshot of a successful compile</li><li>A screenshot showing owner() returns your Remix account address after deployment</li><li>One paragraph explaining what each variable is for and the difference between storage and temporary data, in your own words</li></ol>
-<h4 style="color:var(--parchment); font-family:var(--font-display); font-size:1.05rem; margin: 1.6rem 0 0.4rem;">Boss success condition</h4>
+<h4 class="boss-heading">Boss success condition</h4>
 <ul class="boss-checklist" data-mission="mission-01">
 <li><input type="checkbox" value="item-0" id="boss-item-0"><label for="boss-item-0">Contract compiles with no errors</label></li>
 <li><input type="checkbox" value="item-1" id="boss-item-1"><label for="boss-item-1">All four state variables present with correct types</label></li>

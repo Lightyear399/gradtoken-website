@@ -51,7 +51,7 @@
   </div>
 </nav>
 
-<div id="exam-timer-bar" class="exam-timer-bar" style="display:none;">
+<div id="exam-timer-bar" class="exam-timer-bar" hidden>
   <span class="clock" id="exam-clock">90:00</span>
   <span class="progress" id="exam-progress">0 of 0 answered</span>
 </div>
@@ -59,18 +59,18 @@
 
 <main id="main">
 
-  <div id="gate-locked" class="gate-locked" style="display:none;">
+  <div id="gate-locked" class="gate-locked" hidden>
     <div class="wrap">
       <div class="gate-locked-panel">
         <span class="eyebrow">Locked</span>
         <h2>Not yet.</h2>
-        <p id="gate-locked-message" class="form-note" style="font-size:1rem;"></p>
+        <p id="gate-locked-message" class="form-note gate-msg"></p>
         <button class="btn-primary" id="gate-recheck-btn" type="button">Check again</button>
       </div>
     </div>
   </div>
 
-  <div id="gate-content" style="display:none;">
+  <div id="gate-content" hidden>
 
   <section id="exam-start-panel">
     <div class="wrap exam-intro">
@@ -85,11 +85,11 @@
       </ul>
 
       <button class="btn-primary" id="exam-start-btn" type="button">Start the exam</button>
-      <p id="exam-start-feedback" class="form-note" style="margin-top:0.9rem;"></p>
+      <p id="exam-start-feedback" class="form-note mt-sm"></p>
     </div>
   </section>
 
-  <section id="exam-in-progress-panel" style="display:none;">
+  <section id="exam-in-progress-panel" hidden>
     <div class="wrap">
       <div id="exam-questions"></div>
       <div class="exam-submit-bar">
@@ -99,7 +99,7 @@
     </div>
   </section>
 
-  <section id="exam-result-panel" style="display:none;">
+  <section id="exam-result-panel" hidden>
     <div class="wrap"></div>
   </section>
 

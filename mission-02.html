@@ -63,25 +63,25 @@
 </div>
 
 <main id="main">
-  <div id="gate-locked" class="gate-locked" style="display:none;">
+  <div id="gate-locked" class="gate-locked" hidden>
     <div class="wrap">
       <div class="gate-locked-panel">
         <span class="eyebrow">Locked</span>
         <h2>Not yet.</h2>
-        <p id="gate-locked-message" class="form-note" style="font-size:1rem;"></p>
+        <p id="gate-locked-message" class="form-note gate-msg"></p>
         <button class="btn-primary" id="gate-recheck-btn" type="button">Check again</button>
       </div>
     </div>
   </div>
 
-  <div id="gate-content" style="display:none;">
+  <div id="gate-content" hidden>
     <header class="hero">
       <div class="wrap">
         <div>
           <span class="eyebrow">GradLearn · Solidity Basics · Mission 02</span>
           <h1>Mission 02 — Protect and Fund the Vault</h1>
           <p class="lede">Lesson 2: Functions, Visibility, Modifiers, Access Control &amp; Payable ETH</p>
-          <p class="lede" style="font-size:0.95rem;">Dependency: Lesson 1: contract structure, state variables, data types, constructor preview.</p>
+          <p class="lede lede-sm">Dependency: Lesson 1: contract structure, state variables, data types, constructor preview.</p>
           <ul class="lesson-objectives">
 <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> write functions with parameters and return values, using view and pure correctly</li>
 <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> choose the right visibility for every function</li>
@@ -329,7 +329,7 @@ require(msg.value &gt;= 0.01 ether, "Too low");</div></div>
 <p>Boss test (run every case in Remix VM and screenshot each):</p>
 <ul><li>Owner calls the restricted update → succeeds</li><li>Non-owner calls the restricted update → reverts</li><li>Account deposits 1 ETH → balance recorded as 100000000000000000</li><li>Account deposits 0 ETH → reverts</li><li>Account withdraws 1 ETH → succeeds, balance back to 0</li><li>Account withdraws more than its balance → reverts</li></ul>
 <p>You'll turn these same cases into automated tests in Mission 04.</p>
-<h4 style="color:var(--parchment); font-family:var(--font-display); font-size:1.05rem; margin: 1.6rem 0 0.4rem;">Lesson 2 completion criteria</h4>
+<h4 class="boss-heading">Lesson 2 completion criteria</h4>
 <ul class="boss-checklist" data-mission="mission-02">
 <li><input type="checkbox" value="item-0" id="boss-item-0"><label for="boss-item-0">onlyOwner modifier written and applied</label></li>
 <li><input type="checkbox" value="item-1" id="boss-item-1"><label for="boss-item-1">Payable deposit and safe withdraw implemented in the right order</label></li>

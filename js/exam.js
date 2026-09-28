@@ -210,7 +210,7 @@
   function showPanel(name) {
     ["exam-start-panel", "exam-in-progress-panel", "exam-result-panel"].forEach((id) => {
       const p = document.getElementById(id);
-      if (p) p.style.display = id === name ? "" : "none";
+      if (p) p.hidden = id !== name;
     });
   }
 
@@ -245,7 +245,7 @@
       applyDraft(loadDraft(data.attemptId));
       updateProgress();
       startTimer(data.expiresAt);
-      document.getElementById("exam-timer-bar").style.display = "";
+      document.getElementById("exam-timer-bar").hidden = false;
       showPanel("exam-in-progress-panel");
 
       document.getElementById("exam-questions").addEventListener("input", () => {
@@ -308,7 +308,7 @@
 
   function renderOutcome(message, data, retryable) {
     showPanel("exam-result-panel");
-    document.getElementById("exam-timer-bar").style.display = "none";
+    document.getElementById("exam-timer-bar").hidden = true;
     const panel = document.getElementById("exam-result-panel");
     panel.innerHTML = "";
     const box = el("div", { class: "exam-result" });
