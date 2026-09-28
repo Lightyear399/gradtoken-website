@@ -5,3 +5,5 @@ build/
 .env
 coverage/
 coverage.json
+
+*PRIVATE-DO-NOT-COMMIT*
