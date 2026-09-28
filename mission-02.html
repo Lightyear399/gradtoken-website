@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mission 02 — Protect and Fund the Vault — GradLearn | GradToken</title>
+<meta name="description" content="GradLearn Solidity Basics, Mission 02: Functions, Visibility, Modifiers, Access Control &amp; Payable ETH.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; manifest-src 'self'; worker-src 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0B1F3A">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+</head>
+<body data-requires-missions="mission-01">
+
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="nav">
+  <div class="wrap">
+    <a href="index.html" class="nav-mark">GradToken<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="how-it-works.html">How it works</a></li>
+      <li><a href="courses.html" aria-current="page">Courses</a></li>
+      <li><a href="tokenomics.html">Tokenomics</a></li>
+      <li><a href="roadmap.html">Roadmap</a></li>
+      <li><a href="security.html">Security</a></li>
+      <li><a href="community.html">Community</a></li>
+    </ul>
+    <a class="nav-cta" href="security.html">View Verified Contracts</a>
+    <div class="wallet-widget">
+      <button id="pwa-install-btn" class="nav-cta" type="button" style="display:none;">Install app</button>
+      <a href="dashboard.html" id="wallet-dashboard-link" style="display:none;">Dashboard</a>
+      <span id="wallet-status"></span>
+      <button id="wallet-connect-btn" class="nav-cta" type="button">Connect Wallet</button>
+    </div>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="how-it-works.html">How it works</a>
+    <a href="courses.html" aria-current="page">Courses</a>
+    <a href="tokenomics.html">Tokenomics</a>
+    <a href="roadmap.html">Roadmap</a>
+    <a href="security.html">Security</a>
+    <a href="community.html">Community</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+</nav>
+
+<div class="lesson-nav">
+  <a href="mission-01.html">← Mission 01</a>
+  <div class="dots">
+    <span class="dot done"></span>
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+  <a href="mission-03.html">Mission 03 →</a>
+</div>
+
+<main id="main">
+  <div id="gate-locked" class="gate-locked" style="display:none;">
+    <div class="wrap">
+      <div class="gate-locked-panel">
+        <span class="eyebrow">Locked</span>
+        <h2>Not yet.</h2>
+        <p id="gate-locked-message" class="form-note" style="font-size:1rem;"></p>
+        <button class="btn-primary" id="gate-recheck-btn" type="button">Check again</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="gate-content" style="display:none;">
+    <header class="hero">
+      <div class="wrap">
+        <div>
+          <span class="eyebrow">GradLearn · Solidity Basics · Mission 02</span>
+          <h1>Mission 02 — Protect and Fund the Vault</h1>
+          <p class="lede">Lesson 2: Functions, Visibility, Modifiers, Access Control &amp; Payable ETH</p>
+          <p class="lede" style="font-size:0.95rem;">Dependency: Lesson 1: contract structure, state variables, data types, constructor preview.</p>
+          <ul class="lesson-objectives">
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> write functions with parameters and return values, using view and pure correctly</li>
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> choose the right visibility for every function</li>
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> control access using msg.sender, require, modifiers and custom errors</li>
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> accept ETH with payable and msg.value</li>
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> send ETH safely using call and the Checks-Effects-Interactions pattern</li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <div class="wrap">
+<div class="lesson-section">
+<span class="lesson-tag">THEORY</span>
+<h3>2.1 THEORY — Functions</h3>
+<div class="code-block"><pre><code>function setNumber(uint256 newNumber) public {
+  number = newNumber;
+}</code></pre></div>
+<p>function → name → parameters → visibility → body (state change)</p>
+<ul><li><code>function setNumber(...)</code> — declares a function.</li><li><code>uint256 newNumber</code> — a parameter: temporary input.</li><li><code>public</code> — visibility: who may call it.</li><li><code>number = newNumber;</code> — the state change. This is the only line whose effect outlives the transaction.</li></ul>
+<p>Returning values: view and pure</p>
+<div class="code-block"><pre><code>uint256 public number;
+
+// view: reads state, does not change it
+function getDouble() public view returns (uint256) {
+  return number * 2;
+}
+
+// pure: doesn't read or change state at all
+function add(uint256 a, uint256 b) public pure returns (uint256) {
+  return a + b;
+}</code></pre></div>
+<table class="lesson-table"><thead><tr><th>Kind</th><th>Reads state?</th><th>Changes state?</th><th>Costs gas when called from outside?</th></tr></thead><tbody><tr><td>(none)</td><td>yes</td><td>yes</td><td>yes — it's a transaction</td></tr><tr><td><code>view</code></td><td>yes</td><td>no</td><td>no, when called directly as a read</td></tr><tr><td><code>pure</code></td><td>no</td><td>no</td><td>no, when called directly as a read</td></tr></tbody></table>
+<p>In Remix, state-changing functions show as orange buttons (transactions); view/pure show as blue (free reads).</p>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">ANALOGY</span>
+<h3>2.2 ANALOGY — The Bank Branch</h3>
+<p>A bank has:</p>
+<ul><li>public information anyone can ask for (opening hours) → view functions</li><li>customer operations anyone with an account can do (deposit) → public / external functions</li><li>manager-only operations (changing the vault code) → functions guarded by onlyOwner</li><li>a security guard at each door checking badges → modifiers and require</li><li>a cash drawer that only opens for deposits at the counter → payable functions</li></ul>
+<p>Keep this picture in mind for the whole mission.</p>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">THEORY</span>
+<h3>2.3 THEORY — Visibility</h3>
+<table class="lesson-table"><thead><tr><th>Keyword</th><th>Who can call it</th></tr></thead><tbody><tr><td><code>public</code></td><td>Anyone from outside, and other functions inside this contract</td></tr><tr><td><code>external</code></td><td>Only from outside (wallets, other contracts). Inside the contract you'd have to use <code>this.f()</code>, which makes a real external call and costs more gas — so normally you don't</td></tr><tr><td><code>internal</code></td><td>This contract and contracts that inherit from it</td></tr><tr><td><code>private</code></td><td>Only this exact contract</td></tr></tbody></table>
+<div class="lesson-callout">Beginner trap: private and internal only restrict which Solidity code can call the function. They don't hide the function or its logic. The bytecode is public, and verified source code (Mission 04) is readable by everyone.</div>
+<p>Rule of thumb: give every function the most restrictive visibility that still works.</p>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">THEORY</span>
+<h3>2.4 THEORY — msg.sender and require</h3>
+<p>Every call carries the identity of whoever made it: msg.sender.</p>
+<ul><li>Alice calls the contract → msg.sender == Alice</li><li>Bob calls the contract → msg.sender == Bob</li><li>Alice calls Contract A, which calls Contract B → inside B, msg.sender == Contract A</li></ul>
+<p>require(condition, "message") checks a condition. If it's false, the whole transaction reverts: every state change in that transaction is undone, and the message is returned to the caller.</p>
+<div class="lesson-callout">Don't use tx.origin (the original wallet that started the transaction) for access control. A malicious contract can trick an owner into calling it and then act on their behalf. Use msg.sender.</div>
+<div class="code-block"><pre><code>require(msg.sender == owner, "Not owner");</code></pre></div>
+<p>INTERACTIVE — Door guard simulation. Alice deployed the contract, so she is owner. Trace each scenario:</p>
+<details class="reveal"><summary>Reveal</summary><div class="reveal-body"><table class="lesson-table"><thead><tr><th>Caller</th><th>Check</th><th>Result</th></tr></thead><tbody><tr><td>Alice</td><td>true</td><td>continues to the function body</td></tr><tr><td>Bob</td><td>false</td><td>reverts with "Not owner"; no state changes</td></tr></tbody></table>
+<p>Bob doesn't become owner, the contract doesn't disappear, and nothing he attempted is saved.</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">EXAMPLE</span>
+<h3>2.5 EXAMPLE — Modifiers</h3>
+<p>Repeating the same require in every function is error-prone — forget it once and you have a real vulnerability. A modifier names the check once and reuses it.</p>
+<div class="code-block"><pre><code>modifier onlyOwner() {
+  require(msg.sender == owner, "Not owner");
+  _;
+}
+
+function setValue(uint256 newValue) public onlyOwner {
+  value = newValue;
+}</code></pre></div>
+<p>What <code>_;</code> means: "run the function body here." Code before <code>_;</code> runs first (the guard). Code after <code>_;</code> runs after the body.</p>
+<p>INTERACTIVE — Modifier order prediction</p>
+<div class="code-block"><pre><code>uint256 public x;
+
+modifier addOne() {
+  x += 1;
+  _;
+  x += 10;
+}
+
+function double() public addOne {
+  x = x * 2;
+}</code></pre></div>
+<p>Starting from x = 0, what is x after one call to double()?</p>
+<details class="reveal"><summary>Reveal</summary><div class="reveal-body"><p>12. Before <code>_;</code>: x = 1. Body: x = 2. After <code>_;</code>: x = 12.</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">THEORY + EXAMPLE</span>
+<h3>2.6 THEORY + EXAMPLE — Constructors (formal)</h3>
+<p>You previewed this in Mission 01. The full rules:</p>
+<ul><li>A constructor runs once, during deployment, and never again.</li><li>It can take parameters: <code>constructor(uint256 startValue) { value = startValue; }</code> — you then enter them in Remix next to the Deploy button.</li><li>It's the standard place to set <code>owner = msg.sender</code>.</li></ul>
+<p>Why it matters for security: if you set owner in a normal public function instead, anyone could call it and take ownership. Constructor parameters also matter during verification (Mission 04).</p>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">THEORY + EXAMPLE</span>
+<h3>2.7 THEORY + EXAMPLE — Custom Errors</h3>
+<p>require with a string message works, but the string is stored in the bytecode and returned on every failure. Custom errors are cheaper and can carry data:</p>
+<div class="code-block"><pre><code>error Unauthorized(address caller);
+error AmountTooLow();
+
+modifier onlyOwner() {
+  if (msg.sender != owner) revert Unauthorized(msg.sender);
+  _;
+}</code></pre></div>
+<ul><li><code>error Name(...)</code> declares the error.</li><li><code>revert Name(...)</code> triggers it, reverting the transaction like require.</li><li>Note the logic is flipped: <code>require(ok)</code> versus <code>if (!ok) revert ...</code>.</li></ul>
+<div class="lesson-callout">On 0.8.24 use the if (...) revert Error(); form. The shorter require(condition, Error()) form only exists in later compiler versions, so it won't compile with the course compiler.</div>
+<p>Both styles are correct. Your final project must use either payable ETH handling or custom errors — many students use both.</p>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">THEORY</span>
+<h3>2.8 THEORY — Handling ETH: payable, msg.value, and Safe Withdrawals</h3>
+<ul><li>A function can only receive ETH if it's marked payable. Sending ETH to a non-payable function reverts.</li><li>msg.value is the amount of ETH sent with the call, in wei. 1 ETH = 10^18 wei = 1,000,000,000,000,000,000 wei.</li><li>address(this).balance is the total ETH the contract currently holds.</li></ul>
+<p>Mapping preview — the vault below needs to remember a balance per user. That needs a mapping, which Mission 03 covers fully. For now, read this line as "a lookup table from address to number, where every address starts at 0":</p>
+<div class="code-block"><pre><code>mapping(address =&gt; uint256) public balances;</code></pre></div>
+<p>EXAMPLE — SecureVault</p>
+<div class="code-block"><pre><code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+contract SecureVault {
+  address public owner;
+  uint256 public value;
+  mapping(address =&gt; uint256) public balances;
+
+  constructor() {
+    owner = msg.sender;
+  }
+
+  modifier onlyOwner() {
+    require(msg.sender == owner, "Not owner");
+    _;
+  }
+
+  function setValue(uint256 newValue) public onlyOwner {
+    value = newValue;
+  }
+
+  function deposit() public payable {
+    require(msg.value &gt; 0, "Must deposit ETH");
+    balances[msg.sender] += msg.value;
+  }
+
+  function withdraw(uint256 amount) public {
+    // 1. CHECKS
+    require(balances[msg.sender] &gt;= amount, "Insufficient balance");
+
+    // 2. EFFECTS — update state BEFORE sending ETH
+    balances[msg.sender] -= amount;
+
+    // 3. INTERACTIONS — external call last
+    (bool success, ) = payable(msg.sender).call{value: amount}("");
+    require(success, "ETH transfer failed");
+  }
+}</code></pre></div>
+<p>Why this order? Checks → Effects → Interactions. Sending ETH hands control to the receiver. If the receiver is a contract, its code runs during your withdraw. If you hadn't reduced the balance yet, that code could call withdraw again and again, each time passing the balance check — this is a reentrancy attack, one of the most famous bugs in Ethereum history.</p>
+<p>Updating the balance first means a second call sees the already-reduced balance and fails the check.</p>
+<p>Why .call{value: amount}("")? .transfer() and .send() forward a fixed 2,300 gas. That's too little for many smart contract wallets, and gas costs of EVM operations have changed in past network upgrades. .call forwards enough gas and returns a success flag, which you must check with require(success, ...). Because .call hands over more gas, following Checks-Effects-Interactions is essential.</p>
+<p>Receiving plain ETH — if someone sends ETH to the contract address without calling any function, it reverts unless the contract has a receive function:</p>
+<div class="code-block"><pre><code>receive() external payable {
+  // runs when ETH is sent with no function call
+}</code></pre></div>
+<p>SecureVault deliberately has none, so ETH can only come in through deposit(), which records who sent it.</p>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">PRACTICE</span>
+<h3>2.9 PRACTICE — Multi-Account Testing in Remix</h3>
+<ol><li>In Deploy &amp; Run Transactions, set Environment to Remix VM. Select Account A in the Account dropdown. Click Deploy.</li><li>Expand the deployed instance (bottom of the panel). Don't click Deploy again — that creates a new contract.</li><li>Switch the Account dropdown to Account B. Call setValue(99). Observe the red error: reverted with "Not owner".</li><li>Switch back to Account A. Call setValue(42). Observe success, then click value to confirm it's 42.</li><li>Still on Account A: in the Value field above the Deploy button, enter 1 and select Ether. Click deposit. Clear the Value field back to 0.</li><li>Call balances with Account A's address (copy it with the copy icon next to the dropdown). Predict the number first, in wei.</li><li>Call withdraw with 1000000000000000000. Check Account A's ETH balance in the dropdown went back up (minus gas).</li><li>Try withdraw again with the same amount. Predict what happens before clicking.</li></ol>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">DEBUG</span>
+<h3>2.10 DEBUG — Three Bugs at the Door</h3>
+<p>Bug A — this one compiles</p>
+<div class="code-block"><pre><code>modifier onlyOwner() {
+  require(msg.sender = owner, "Not owner");
+  _;
+}</code></pre></div>
+<details class="reveal"><summary>Hint</summary><div class="reveal-body"><p>How many = signs do you need to compare two values?</p></div></details>
+<details class="reveal"><summary>Reveal fix</summary><div class="reveal-body"><p>= is assignment; == is comparison. msg.sender can't be assigned to, so this doesn't compile. Fix: require(msg.sender == owner, "Not owner");</p></div></details>
+<p>Bug B — this one also compiles</p>
+<div class="code-block"><pre><code>function setOwner(address newOwner) public {
+  owner = newOwner;
+}</code></pre></div>
+<details class="reveal"><summary>Hint</summary><div class="reveal-body"><p>Imagine you're Bob, a stranger. What can you do with this function?</p></div></details>
+<details class="reveal"><summary>Reveal fix</summary><div class="reveal-body"><p>There's no access control, so anyone can make themselves owner and then call every onlyOwner function. Add onlyOwner. Also consider rejecting address(0) as a new owner: require(newOwner != address(0), "Zero address");</p></div></details>
+<p>Bug C</p>
+<div class="code-block"><pre><code>function withdraw(uint256 amount) public {
+  require(balances[msg.sender] &gt;= amount, "Insufficient balance");
+  (bool success, ) = payable(msg.sender).call{value: amount}("");
+  require(success, "ETH transfer failed");
+  balances[msg.sender] -= amount;
+}</code></pre></div>
+<details class="reveal"><summary>Hint</summary><div class="reveal-body"><p>Compare the order of the three steps to the SecureVault example. When does the receiver's code get to run?</p></div></details>
+<details class="reveal"><summary>Reveal fix</summary><div class="reveal-body"><p>The balance is reduced after sending ETH. A malicious receiving contract can re-enter withdraw before the balance is updated and drain the vault. Move balances[msg.sender] -= amount; above the call.</p></div></details>
+<p>Code reading challenge</p>
+<div class="code-block"><pre><code>function withdrawAll() external onlyOwner {
+  (bool success, ) = payable(owner).call{value: address(this).balance}("");
+  require(success, "Transfer failed");
+}</code></pre></div>
+<ol><li>Who can call it?</li><li>Why is onlyOwner there?</li><li>What does payable(owner) do?</li><li>What happens if a non-owner calls it?</li><li>Inside SecureVault, what's wrong with adding this function?</li></ol>
+<details class="reveal"><summary>Reveal</summary><div class="reveal-body"><p>1. Only the address in owner.
+2. Without it, anyone could take all the ETH.
+3. Converts address to address payable so it can receive ETH.
+4. It reverts in the modifier before any ETH moves.
+5. SecureVault's ETH belongs to depositors, tracked in balances. This function lets the owner take everyone's money while their balances entries still say they're owed it. Access control isn't the only question — you also have to ask whether the rules are fair to users.</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">CHECK</span>
+<h3>2.11 CHECK — Knowledge Check</h3>
+<ol><li>What does msg.sender represent?</li><li>What happens if someone sends ETH to a function not marked payable?</li><li>What does _; do inside a modifier?</li><li>Why prefer .call{value: amount}("") over .transfer(amount)?</li><li>What happens to earlier state changes in a transaction that later reverts?</li><li>What's the difference between view and pure?</li></ol>
+<details class="reveal"><summary>Reveal</summary><div class="reveal-body"><p>1. The address that made the current call.
+2. The transaction reverts.
+3. Marks where the function body runs.
+4. .transfer() forwards only 2,300 gas, which can break smart contract wallets and is fragile against gas-cost changes. .call must be paired with a success check and Checks-Effects-Interactions.
+5. They're all rolled back.
+6. view can read state but not change it. pure can neither read nor change it.</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">MINI TEST</span>
+<h3>2.12 MINI TEST — Lesson 2 (pass: 4/5)</h3>
+
+<div class="lesson-quiz-q"><div class="q-text">Q1. Which visibility lets a function be called from outside and by other functions in the same contract without this.?</div></div>
+<div class="lesson-quiz-q"><div class="q-text">Q2. Bob has deposited 2 ETH. He calls withdraw(3 ether) on SecureVault. What happens, and what is his balance afterwards?</div></div>
+<div class="lesson-quiz-q"><div class="q-text">Q3. What's wrong with this?
+function deposit() public {
+  balances[msg.sender] += msg.value;
+}</div></div>
+<div class="lesson-quiz-q"><div class="q-text">Q4. Rewrite this using a custom error (write it down, don't just think it):
+require(msg.value &gt;= 0.01 ether, "Too low");</div></div>
+<div class="lesson-quiz-q"><div class="q-text">Q5. Alice calls Contract A. Contract A calls B.whoCalled(), which returns msg.sender. What does it return?</div></div>
+<details class="reveal"><summary>Reveal answers</summary><div class="reveal-body"><p>1. public
+2. Reverts with "Insufficient balance". Balance stays 2 ETH.
+3. It's not payable. Using msg.value in a non-payable public function is a compile error.
+4. Declare error TooLow(); at contract level, then: if (msg.value &lt; 0.01 ether) revert TooLow();
+5. Contract A's address — msg.sender is the immediate caller.</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">BOSS</span>
+<h3>MISSION 02 — BOSS FIGHT: Secure Vault</h3>
+<p>Build your own vault. Don't copy SecureVault line for line — rename things, restructure it, and make sure you can explain every line.</p>
+<p>Requirements:</p>
+<ul><li>The deployer becomes owner via the constructor.</li><li>A payable deposit function that rejects zero deposits and tracks per-user balances in a mapping.</li><li>A withdraw function following Checks-Effects-Interactions and using call{value: amount}("") with a success check.</li><li>An owner-only function that updates a stored setting, guarded by an onlyOwner modifier.</li><li>At least one custom error.</li><li>At least one view function that returns something useful (for example, the caller's balance).</li></ul>
+<p>Boss test (run every case in Remix VM and screenshot each):</p>
+<ul><li>Owner calls the restricted update → succeeds</li><li>Non-owner calls the restricted update → reverts</li><li>Account deposits 1 ETH → balance recorded as 100000000000000000</li><li>Account deposits 0 ETH → reverts</li><li>Account withdraws 1 ETH → succeeds, balance back to 0</li><li>Account withdraws more than its balance → reverts</li></ul>
+<p>You'll turn these same cases into automated tests in Mission 04.</p>
+<h4 style="color:var(--parchment); font-family:var(--font-display); font-size:1.05rem; margin: 1.6rem 0 0.4rem;">Lesson 2 completion criteria</h4>
+<ul class="boss-checklist" data-mission="mission-02">
+<li><input type="checkbox" value="item-0" id="boss-item-0"><label for="boss-item-0">onlyOwner modifier written and applied</label></li>
+<li><input type="checkbox" value="item-1" id="boss-item-1"><label for="boss-item-1">Payable deposit and safe withdraw implemented in the right order</label></li>
+<li><input type="checkbox" value="item-2" id="boss-item-2"><label for="boss-item-2">At least one custom error</label></li>
+<li><input type="checkbox" value="item-3" id="boss-item-3"><label for="boss-item-3">All six boss test cases pass using the account-switching protocol</label></li>
+<li><input type="checkbox" value="item-4" id="boss-item-4"><label for="boss-item-4">Student can explain why state is updated before the ETH transfer</label></li>
+<li><input type="checkbox" value="item-5" id="boss-item-5"><label for="boss-item-5">Mini test passed (4/5)</label></li>
+</ul>
+<div class="lesson-callout">Mission 03 unlocks once all boss test cases pass.</div>
+<div class="lesson-complete-bar">
+<button class="btn-primary" id="mission-complete-btn" type="button" disabled>Mark mission complete</button>
+<p id="mission-complete-feedback" class="form-note"></p>
+</div>
+</div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-mark">GradToken<span class="dot">.</span></div>
+        <p class="footer-tag">Learn-to-earn, verified on-chain. Built in the open, one tested phase at a time.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Project</h4>
+          <a href="how-it-works.html">How it works</a>
+          <a href="tokenomics.html">Tokenomics</a>
+          <a href="roadmap.html">Roadmap</a>
+        </div>
+        <div class="footer-col">
+          <h4>Verify</h4>
+          <a href="security.html">Security &amp; contracts</a>
+          <a href="https://sepolia.etherscan.io/address/0x95A69bcbF176497241887f9CcFd8EcBC4e596587#code" target="_blank" rel="noopener noreferrer">Etherscan</a>
+        </div>
+        <div class="footer-col">
+          <h4>Community</h4>
+          <a href="community.html">All channels</a>
+          <a href="https://t.me/+I9Klso5akAAzMTFk" target="_blank" rel="noopener noreferrer">Telegram</a>
+          <a href="https://discord.gg/AKAp2nCTQ4" target="_blank" rel="noopener noreferrer">Discord</a>
+          <a href="https://x.com/GradToken" target="_blank" rel="noopener noreferrer">X (Twitter)</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="disclaimer">Sepolia is a public test network. GRAD shown on this page has no monetary value and cannot be bought or sold. Nothing here is financial advice or an offer to sell securities.</p>
+      <span class="copyright">© 2026 GradToken</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/wallet-connect.js" defer></script>
+<script src="js/mission-gate.js" defer></script>
+<script src="js/lesson.js" defer></script>
+<script src="js/pwa-register.js" defer></script>
+</body>
+</html>

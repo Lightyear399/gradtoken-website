@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solidity Basics — Final Exam | GradToken</title>
+<meta name="description" content="GradLearn: Solidity Basics final exam. Timed, randomized, drawn from the full course question bank.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; manifest-src 'self'; worker-src 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0B1F3A">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+</head>
+<body data-requires-missions="mission-01,mission-02,mission-03,mission-04">
+
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="nav">
+  <div class="wrap">
+    <a href="index.html" class="nav-mark">GradToken<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="how-it-works.html">How it works</a></li>
+      <li><a href="courses.html" aria-current="page">Courses</a></li>
+      <li><a href="tokenomics.html">Tokenomics</a></li>
+      <li><a href="roadmap.html">Roadmap</a></li>
+      <li><a href="security.html">Security</a></li>
+      <li><a href="community.html">Community</a></li>
+    </ul>
+    <a class="nav-cta" href="security.html">View Verified Contracts</a>
+    <div class="wallet-widget">
+      <button id="pwa-install-btn" class="nav-cta" type="button" style="display:none;">Install app</button>
+      <a href="dashboard.html" id="wallet-dashboard-link" style="display:none;">Dashboard</a>
+      <span id="wallet-status"></span>
+      <button id="wallet-connect-btn" class="nav-cta" type="button">Connect Wallet</button>
+    </div>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="how-it-works.html">How it works</a>
+    <a href="courses.html" aria-current="page">Courses</a>
+    <a href="tokenomics.html">Tokenomics</a>
+    <a href="roadmap.html">Roadmap</a>
+    <a href="security.html">Security</a>
+    <a href="community.html">Community</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+</nav>
+
+<div id="exam-timer-bar" class="exam-timer-bar" style="display:none;">
+  <span class="clock" id="exam-clock">90:00</span>
+  <span class="progress" id="exam-progress">0 of 0 answered</span>
+</div>
+<div id="exam-live-region" class="sr-only" aria-live="assertive" role="status"></div>
+
+<main id="main">
+
+  <div id="gate-locked" class="gate-locked" style="display:none;">
+    <div class="wrap">
+      <div class="gate-locked-panel">
+        <span class="eyebrow">Locked</span>
+        <h2>Not yet.</h2>
+        <p id="gate-locked-message" class="form-note" style="font-size:1rem;"></p>
+        <button class="btn-primary" id="gate-recheck-btn" type="button">Check again</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="gate-content" style="display:none;">
+
+  <section id="exam-start-panel">
+    <div class="wrap exam-intro">
+      <span class="eyebrow">GradLearn · Solidity Basics</span>
+      <h1>Final Exam.</h1>
+      <p class="lede">70/100 to pass. 90 minutes, once you start. Questions are drawn at random from the full bank, so no two students get quite the same exam.</p>
+
+      <ul class="exam-rules">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10z"/></svg> The clock starts the moment you click Start, and keeps running even if you close the tab.</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/></svg> Refreshing the page won't reset your clock or reshuffle your questions.</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Some sections are graded automatically; others are reviewed by hand afterward. Either way, no answer key is ever shown — only your score.</li>
+      </ul>
+
+      <button class="btn-primary" id="exam-start-btn" type="button">Start the exam</button>
+      <p id="exam-start-feedback" class="form-note" style="margin-top:0.9rem;"></p>
+    </div>
+  </section>
+
+  <section id="exam-in-progress-panel" style="display:none;">
+    <div class="wrap">
+      <div id="exam-questions"></div>
+      <div class="exam-submit-bar">
+        <button class="btn-primary" id="exam-submit-btn" type="button">Submit exam</button>
+        <p class="form-note">You can submit any time — unanswered questions score zero.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="exam-result-panel" style="display:none;">
+    <div class="wrap"></div>
+  </section>
+
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-mark">GradToken<span class="dot">.</span></div>
+        <p class="footer-tag">Learn-to-earn, verified on-chain. Built in the open, one tested phase at a time.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Project</h4>
+          <a href="how-it-works.html">How it works</a>
+          <a href="tokenomics.html">Tokenomics</a>
+          <a href="roadmap.html">Roadmap</a>
+        </div>
+        <div class="footer-col">
+          <h4>Verify</h4>
+          <a href="security.html">Security &amp; contracts</a>
+          <a href="https://sepolia.etherscan.io/address/0x95A69bcbF176497241887f9CcFd8EcBC4e596587#code" target="_blank" rel="noopener noreferrer">Etherscan</a>
+        </div>
+        <div class="footer-col">
+          <h4>Community</h4>
+          <a href="community.html">All channels</a>
+          <a href="https://t.me/+I9Klso5akAAzMTFk" target="_blank" rel="noopener noreferrer">Telegram</a>
+          <a href="https://discord.gg/AKAp2nCTQ4" target="_blank" rel="noopener noreferrer">Discord</a>
+          <a href="https://x.com/GradToken" target="_blank" rel="noopener noreferrer">X (Twitter)</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="disclaimer">Sepolia is a public test network. GRAD shown on this page has no monetary value and cannot be bought or sold. Nothing here is financial advice or an offer to sell securities.</p>
+      <span class="copyright">© 2026 GradToken</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/wallet-connect.js" defer></script>
+<script src="js/mission-gate.js" defer></script>
+<script src="js/exam.js" defer></script>
+<script src="js/pwa-register.js" defer></script>
+</body>
+</html>

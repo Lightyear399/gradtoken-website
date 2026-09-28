@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mission 03 — Build the Student Registry — GradLearn | GradToken</title>
+<meta name="description" content="GradLearn Solidity Basics, Mission 03: Mappings, Structs, Events &amp; Data Locations.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; manifest-src 'self'; worker-src 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0B1F3A">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+</head>
+<body data-requires-missions="mission-02">
+
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="nav">
+  <div class="wrap">
+    <a href="index.html" class="nav-mark">GradToken<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="how-it-works.html">How it works</a></li>
+      <li><a href="courses.html" aria-current="page">Courses</a></li>
+      <li><a href="tokenomics.html">Tokenomics</a></li>
+      <li><a href="roadmap.html">Roadmap</a></li>
+      <li><a href="security.html">Security</a></li>
+      <li><a href="community.html">Community</a></li>
+    </ul>
+    <a class="nav-cta" href="security.html">View Verified Contracts</a>
+    <div class="wallet-widget">
+      <button id="pwa-install-btn" class="nav-cta" type="button" style="display:none;">Install app</button>
+      <a href="dashboard.html" id="wallet-dashboard-link" style="display:none;">Dashboard</a>
+      <span id="wallet-status"></span>
+      <button id="wallet-connect-btn" class="nav-cta" type="button">Connect Wallet</button>
+    </div>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="how-it-works.html">How it works</a>
+    <a href="courses.html" aria-current="page">Courses</a>
+    <a href="tokenomics.html">Tokenomics</a>
+    <a href="roadmap.html">Roadmap</a>
+    <a href="security.html">Security</a>
+    <a href="community.html">Community</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+</nav>
+
+<div class="lesson-nav">
+  <a href="mission-02.html">← Mission 02</a>
+  <div class="dots">
+    <span class="dot done"></span>
+    <span class="dot done"></span>
+    <span class="dot active"></span>
+    <span class="dot"></span>
+  </div>
+  <a href="mission-04.html">Mission 04 →</a>
+</div>
+
+<main id="main">
+  <div id="gate-locked" class="gate-locked" style="display:none;">
+    <div class="wrap">
+      <div class="gate-locked-panel">
+        <span class="eyebrow">Locked</span>
+        <h2>Not yet.</h2>
+        <p id="gate-locked-message" class="form-note" style="font-size:1rem;"></p>
+        <button class="btn-primary" id="gate-recheck-btn" type="button">Check again</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="gate-content" style="display:none;">
+    <header class="hero">
+      <div class="wrap">
+        <div>
+          <span class="eyebrow">GradLearn · Solidity Basics · Mission 03</span>
+          <h1>Mission 03 — Build the Student Registry</h1>
+          <p class="lede">Lesson 3: Mappings, Structs, Events &amp; Data Locations</p>
+          <p class="lede" style="font-size:0.95rem;">Dependency: Lessons 1–2: variables, functions, msg.sender, modifiers, constructors.</p>
+          <ul class="lesson-objectives">
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> store data per address with mappings, and explain their default-value behavior</li>
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> group related data with structs</li>
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> choose correctly between storage, memory and calldata</li>
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> validate string input</li>
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> emit events and read them in Remix and Etherscan</li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <div class="wrap">
+<div class="lesson-section">
+<span class="lesson-tag">THEORY</span>
+<h3>3.1 THEORY — Mappings</h3>
+<div class="code-block"><pre><code>mapping(address =&gt; uint256) public scores;</code></pre></div>
+<p>Simply: a key → value lookup table. Give it an address, get a number.</p>
+<p>Technically:</p>
+<ul><li>Every possible key already "exists" and returns the default value until set: 0, false, address(0), "".</li><li>A mapping has no length and cannot be looped over. It doesn't know which keys have been set.</li><li>Mappings can only live in storage.</li><li>A public mapping gets a getter that takes the key as input: scores(someAddress).</li></ul>
+<div class="lesson-callout">Consequence: because an unset key returns defaults, you can't tell "never registered" from "registered with a score of 0" unless you store something that shows registration — like an enrolled flag.</div>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">THEORY</span>
+<h3>3.2 THEORY — Structs</h3>
+<p>A struct groups related fields into one custom type:</p>
+<div class="code-block"><pre><code>struct Student {
+  string name;
+  uint256 score;
+  bool enrolled;
+}
+
+mapping(address =&gt; Student) public students;</code></pre></div>
+<p>Two ways to create one:</p>
+<div class="code-block"><pre><code>Student(name, 0, true) // by position
+Student({name: name, score: 0, enrolled: true}) // by name — clearer, safer</code></pre></div>
+<p>The named form is safer: if someone reorders the struct fields later, positional code silently puts values in the wrong fields.</p>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">ANALOGY</span>
+<h3>3.3 ANALOGY — The School Registrar's Office</h3>
+<ul><li>The struct is the blank enrollment form: every student's form has the same fields (name, score, enrolled).</li><li>The mapping is a filing cabinet with one drawer per wallet address. Every drawer exists, but most are empty — opening an empty drawer gives you a blank form (default values), not an error. There's no index of which drawers are full.</li><li>An event is the public announcement board outside the office. When someone enrolls, a notice goes up: "0xAbc… enrolled as Ada." Anyone passing by (apps, Etherscan) can read the board, but the clerks inside (the contract) can't look back at old notices.</li><li>storage vs memory: editing the form in the drawer (storage) versus photocopying it and scribbling on the copy (memory) — the copy's changes never reach the drawer.</li><li>calldata is the sealed envelope the student hands in. You can read it and file its contents, but you can't write on it.</li></ul>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">THEORY</span>
+<h3>3.4 THEORY — Data Locations: storage, memory, calldata</h3>
+<table class="lesson-table"><thead><tr><th>Location</th><th>Where</th><th>Mutable?</th><th>Lifetime</th><th>Typical use</th></tr></thead><tbody><tr><td><code>storage</code></td><td>Contract's permanent state</td><td>yes</td><td>permanent</td><td>state variables; local references to state</td></tr><tr><td><code>memory</code></td><td>Temporary workspace</td><td>yes</td><td>one call</td><td>building or returning temporary values</td></tr><tr><td><code>calldata</code></td><td>The call's input data</td><td>no, read-only</td><td>one call</td><td>function parameters you only read</td></tr></tbody></table>
+<p>Key points:</p>
+<ul><li>calldata is not memory. It's a separate, read-only area holding the input data of the call. Using it for parameters you don't modify avoids copying the data into memory, which saves gas.</li><li>You must write the location for reference types (string, bytes, arrays, structs) in function parameters, return values and local variables. Value types (uint256, bool, address) don't take a location.</li><li>Student storage s = students[a]; creates a reference — changes to s change the stored data.</li><li>Student memory s = students[a]; creates a copy — changes to s are lost when the function ends.</li></ul>
+<p>INTERACTIVE — Copy or reference?</p>
+<div class="code-block"><pre><code>function bumpCopy() external {
+  Student memory s = students[msg.sender];
+  s.score = 100;
+}
+
+function bumpRef() external {
+  Student storage s = students[msg.sender];
+  s.score = 100;
+}</code></pre></div>
+<p>Your stored score starts at 0. Predict your stored score after each:</p>
+<details class="reveal"><summary>Reveal</summary><div class="reveal-body"><table class="lesson-table"><thead><tr><th>Call</th><th>Stored score after</th></tr></thead><tbody><tr><td>bumpCopy()</td><td>0 — only the temporary copy changed</td></tr><tr><td>bumpRef()</td><td>100 — the reference points at storage</td></tr></tbody></table>
+<p>bumpCopy is a classic silent bug: it compiles, runs, costs gas, and does nothing useful. (The compiler may even warn you that s is never used after being changed.)</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">THEORY</span>
+<h3>3.5 THEORY — Validating Strings</h3>
+<p>You can't compare strings with == or != in Solidity. To check a string isn't empty, convert it to bytes and check its length:</p>
+<div class="code-block"><pre><code>require(bytes(name).length &gt; 0, "Name cannot be empty");
+require(bytes(name).length &lt;= 32, "Name too long");</code></pre></div>
+<div class="lesson-callout">bytes(name).length counts bytes, not characters. Plain English letters are 1 byte each, but many other characters (accents, emoji, non-Latin scripts) take 2–4 bytes. A limit like 32 bytes is a storage-cost and abuse guard, not an exact character count.</div>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">THEORY</span>
+<h3>3.6 THEORY — Events</h3>
+<div class="code-block"><pre><code>event StudentRegistered(address indexed student, string name);
+
+emit StudentRegistered(msg.sender, name);</code></pre></div>
+<ul><li>Events write to the transaction's logs, not to contract storage. Logs are cheap and readable by off-chain apps and explorers.</li><li>Contracts cannot read events — not even their own.</li><li>If the transaction reverts, its events disappear too.</li><li>indexed makes a parameter filterable ("show me all registrations for address X"). An event can have up to 3 indexed parameters.</li><li>Indexing a string stores only its hash, not the readable text. That's why name above is not indexed.</li></ul>
+<p>Emit an event for every important state change. It's how the outside world follows your contract.</p>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">EXAMPLE</span>
+<h3>3.7 EXAMPLE — StudentRegistry</h3>
+<p>This version fixes two weaknesses from the earlier draft: students can't re-register to wipe their score, and only the owner can update scores.</p>
+<div class="code-block"><pre><code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+contract StudentRegistry {
+  struct Student {
+    string name;
+    uint256 score;
+    bool enrolled;
+  }
+
+  address public owner;
+  mapping(address =&gt; Student) public students;
+
+  event StudentRegistered(address indexed student, string name);
+  event ScoreUpdated(address indexed student, uint256 oldScore, uint256 newScore);
+
+  error Unauthorized(address caller);
+
+  modifier onlyOwner() {
+    if (msg.sender != owner) revert Unauthorized(msg.sender);
+    _;
+  }
+
+  constructor() {
+    owner = msg.sender;
+  }
+
+  // calldata: we only read `name`, never modify it
+  function register(string calldata name) external {
+    require(bytes(name).length &gt; 0, "Name cannot be empty");
+    require(bytes(name).length &lt;= 32, "Name too long");
+    require(!students[msg.sender].enrolled, "Already registered");
+    students[msg.sender] = Student({name: name, score: 0, enrolled: true});
+    emit StudentRegistered(msg.sender, name);
+  }
+
+  function updateScore(address studentAddr, uint256 newScore) external onlyOwner {
+    Student storage student = students[studentAddr];
+    require(student.enrolled, "Not enrolled");
+    uint256 oldScore = student.score;
+    student.score = newScore;
+    emit ScoreUpdated(studentAddr, oldScore, newScore);
+  }
+
+  function isEnrolled(address studentAddr) external view returns (bool) {
+    return students[studentAddr].enrolled;
+  }
+}</code></pre></div>
+<p>Read it before running it:</p>
+<ol><li>Why does register use msg.sender as the key instead of taking an address parameter?</li><li>Why does updateScore use storage and not memory?</li><li>What would go wrong without the "Already registered" check?</li></ol>
+<details class="reveal"><summary>Reveal</summary><div class="reveal-body"><p>1. So students can only register themselves. If register took an address, anyone could register (and name) someone else's wallet.
+2. So changing student.score updates the stored data. With memory, the change would be lost.
+3. A student with a low score could call register again and reset their score to 0, and anyone could overwrite their own profile freely.</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">PRACTICE</span>
+<h3>3.8 PRACTICE — Run the Registry in Remix</h3>
+<ol><li>Type StudentRegistry into Remix, compile on 0.8.24, deploy on Remix VM with Account A (the owner).</li><li>Switch to Account B. Call register("Ada").</li><li>In the Remix terminal, click the transaction to expand it. Find the logs section and locate your StudentRegistered event. Which fields do you see?</li><li>Call students with Account B's address. Note the returned fields.</li><li>Still on Account B, call register("Ada") again. Predict first.</li><li>Still on Account B, call updateScore(&lt;Account B address&gt;, 90). Predict first. Read the error: which custom error appeared, and what address is inside it?</li><li>Switch to Account A and call updateScore(&lt;Account B address&gt;, 90). Check the ScoreUpdated log shows old score 0 and new score 90.</li><li>Call students with Account C's address (never registered). Explain every returned value.</li></ol>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">DEBUG</span>
+<h3>3.9 DEBUG — Registry Bugs</h3>
+<p>Bug A — doesn't compile</p>
+<div class="code-block"><pre><code>function register(string calldata name) external {
+  require(name != "", "Name required");
+  students[msg.sender] = Student(name, 0, true);
+}</code></pre></div>
+<details class="reveal"><summary>Hint</summary><div class="reveal-body"><p>Which types can Solidity compare with !=? Is string one of them? Section 3.5 shows another way to check for "empty."</p></div></details>
+<details class="reveal"><summary>Reveal fix</summary><div class="reveal-body"><p>Solidity can't compare strings with !=. Use require(bytes(name).length &gt; 0, "Name required");</p></div></details>
+<p>Bug B — compiles, but scores never change</p>
+<div class="code-block"><pre><code>function updateScore(address studentAddr, uint256 newScore) external onlyOwner {
+  Student memory student = students[studentAddr];
+  require(student.enrolled, "Not enrolled");
+  student.score = newScore;
+}</code></pre></div>
+<details class="reveal"><summary>Hint</summary><div class="reveal-body"><p>Where does student live? Revisit the "copy or reference" simulation in 3.4.</p></div></details>
+<details class="reveal"><summary>Reveal fix</summary><div class="reveal-body"><p>memory makes a temporary copy, so the stored score never changes. Use Student storage student = ...;</p></div></details>
+<p>Bug C — compiles, but the front-end never hears about registrations</p>
+<div class="code-block"><pre><code>event StudentRegistered(address indexed student, string name);
+
+function register(string calldata name) external {
+  require(bytes(name).length &gt; 0, "Name required");
+  students[msg.sender] = Student({name: name, score: 0, enrolled: true});
+}</code></pre></div>
+<details class="reveal"><summary>Hint</summary><div class="reveal-body"><p>Declaring an event is like printing a notice. What's the second step to actually put it on the board?</p></div></details>
+<details class="reveal"><summary>Reveal fix</summary><div class="reveal-body"><p>The event is declared but never emitted. Add emit StudentRegistered(msg.sender, name); after the state change.</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">CHECK</span>
+<h3>3.10 CHECK — Knowledge Check</h3>
+<ol><li>What does a mapping return for a key that was never set?</li><li>Why use calldata instead of memory for a string parameter you only read?</li><li>How do you check that a string is empty?</li><li>Can a contract read its own past events?</li><li>Why isn't the name in StudentRegistered indexed?</li></ol>
+<details class="reveal"><summary>Reveal</summary><div class="reveal-body"><p>1. The value type's default (0, false, address(0), "", or a struct full of defaults).
+2. It avoids copying the data into memory, which saves gas. It's also read-only, which prevents accidental changes.
+3. bytes(str).length == 0
+4. No. Events live in transaction logs, which contracts can't access.
+5. An indexed string is stored as a hash, so apps couldn't read the actual name from the log.</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">MINI TEST</span>
+<h3>3.11 MINI TEST — Lesson 3 (pass: 4/5)</h3>
+
+<div class="lesson-quiz-q"><div class="q-text">Q1. Can you loop over every key in mapping(address =&gt; Student)? Why or why not?</div></div>
+<div class="lesson-quiz-q"><div class="q-text">Q2. A transaction emits StudentRegistered, then hits a failing require two lines later. Is the event visible on Etherscan?</div></div>
+<div class="lesson-quiz-q"><div class="q-text">Q3. Which data location would you use for each?
+(a) a local variable you'll use to modify a student's stored score
+(b) a string parameter to an external function you only read
+(c) a temporary struct you build inside a function and return</div></div>
+<div class="lesson-quiz-q"><div class="q-text">Q4. What's wrong with this?
+function rename(string calldata newName) external {
+  newName = "Anonymous";
+  students[msg.sender].name = newName;
+}</div></div>
+<div class="lesson-quiz-q"><div class="q-text">Q5. Without the enrolled field, how could the contract tell apart "never registered" and "registered with score 0"?</div></div>
+<details class="reveal"><summary>Reveal answers</summary><div class="reveal-body"><p>1. No. Mappings don't track which keys have been set. To list students, you'd also keep an array of addresses (or rely on events off-chain).
+2. No. A revert undoes everything in the transaction, including logs.
+3. (a) storage (b) calldata (c) memory
+4. calldata is read-only, so assigning to newName is a compile error. If you need to modify a parameter, use memory.
+5. It couldn't reliably — a never-registered student also has name "", score 0. You need an explicit marker (like enrolled), or you'd have to rely on the name being non-empty, which only works because register rejects empty names.</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">BOSS</span>
+<h3>MISSION 03 — BOSS FIGHT: Decentralized Student Registry</h3>
+<p>Extend the registry into your own version. Don't just retype 3.7 — add the new features below yourself.</p>
+<p>Requirements:</p>
+<ul><li>A Student struct with at least name, score and enrollment fields.</li><li>A mapping from address to Student.</li><li>register takes the name as calldata, rejects empty and over-long names, and rejects double registration.</li><li>Only the owner can update scores (modifier, with require or a custom error).</li><li>New: a deregister function that lets a student remove themselves, and emits an event.</li><li>New: a view function returning a student's name and score.</li><li>At least two events, each with an indexed address.</li></ul>
+<p>Boss test (Remix VM, screenshot each):</p>
+<ul><li>Student registers with a valid name → succeeds, event in logs</li><li>Student registers with "" → reverts</li><li>Student registers twice → second call reverts</li><li>Non-owner updates a score → reverts</li><li>Owner updates an enrolled student's score → succeeds, event shows old and new score</li><li>Owner updates an unregistered address → reverts</li><li>Student deregisters → enrolled becomes false, event emitted</li></ul>
+<div class="lesson-callout">Design question to answer in writing: After deregister, should the student be allowed to register again? Should their old score be kept? Explain your choice.</div>
+<h4 style="color:var(--parchment); font-family:var(--font-display); font-size:1.05rem; margin: 1.6rem 0 0.4rem;">Lesson 3 completion criteria</h4>
+<ul class="boss-checklist" data-mission="mission-03">
+<li><input type="checkbox" value="item-0" id="boss-item-0"><label for="boss-item-0">Struct and mapping correctly declared</label></li>
+<li><input type="checkbox" value="item-1" id="boss-item-1"><label for="boss-item-1">Registration uses calldata and proper string validation</label></li>
+<li><input type="checkbox" value="item-2" id="boss-item-2"><label for="boss-item-2">Double-registration blocked; score updates owner-only</label></li>
+<li><input type="checkbox" value="item-3" id="boss-item-3"><label for="boss-item-3">At least two events with indexed addresses, visible in Remix logs</label></li>
+<li><input type="checkbox" value="item-4" id="boss-item-4"><label for="boss-item-4">Student can explain storage vs memory vs calldata</label></li>
+<li><input type="checkbox" value="item-5" id="boss-item-5"><label for="boss-item-5">Design question answered</label></li>
+<li><input type="checkbox" value="item-6" id="boss-item-6"><label for="boss-item-6">Mini test passed (4/5)</label></li>
+</ul>
+<div class="lesson-callout">Mission 04 unlocks once this boss fight is submitted.</div>
+<div class="lesson-complete-bar">
+<button class="btn-primary" id="mission-complete-btn" type="button" disabled>Mark mission complete</button>
+<p id="mission-complete-feedback" class="form-note"></p>
+</div>
+</div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-mark">GradToken<span class="dot">.</span></div>
+        <p class="footer-tag">Learn-to-earn, verified on-chain. Built in the open, one tested phase at a time.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Project</h4>
+          <a href="how-it-works.html">How it works</a>
+          <a href="tokenomics.html">Tokenomics</a>
+          <a href="roadmap.html">Roadmap</a>
+        </div>
+        <div class="footer-col">
+          <h4>Verify</h4>
+          <a href="security.html">Security &amp; contracts</a>
+          <a href="https://sepolia.etherscan.io/address/0x95A69bcbF176497241887f9CcFd8EcBC4e596587#code" target="_blank" rel="noopener noreferrer">Etherscan</a>
+        </div>
+        <div class="footer-col">
+          <h4>Community</h4>
+          <a href="community.html">All channels</a>
+          <a href="https://t.me/+I9Klso5akAAzMTFk" target="_blank" rel="noopener noreferrer">Telegram</a>
+          <a href="https://discord.gg/AKAp2nCTQ4" target="_blank" rel="noopener noreferrer">Discord</a>
+          <a href="https://x.com/GradToken" target="_blank" rel="noopener noreferrer">X (Twitter)</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="disclaimer">Sepolia is a public test network. GRAD shown on this page has no monetary value and cannot be bought or sold. Nothing here is financial advice or an offer to sell securities.</p>
+      <span class="copyright">© 2026 GradToken</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/wallet-connect.js" defer></script>
+<script src="js/mission-gate.js" defer></script>
+<script src="js/lesson.js" defer></script>
+<script src="js/pwa-register.js" defer></script>
+</body>
+</html>

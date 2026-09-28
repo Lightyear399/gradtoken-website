@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mission 01 — The Blockchain Locker — GradLearn | GradToken</title>
+<meta name="description" content="GradLearn Solidity Basics, Mission 01: Syntax, Data Types &amp; State Variables.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; manifest-src 'self'; worker-src 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0B1F3A">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+</head>
+<body data-requires-missions="">
+
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="nav">
+  <div class="wrap">
+    <a href="index.html" class="nav-mark">GradToken<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="how-it-works.html">How it works</a></li>
+      <li><a href="courses.html" aria-current="page">Courses</a></li>
+      <li><a href="tokenomics.html">Tokenomics</a></li>
+      <li><a href="roadmap.html">Roadmap</a></li>
+      <li><a href="security.html">Security</a></li>
+      <li><a href="community.html">Community</a></li>
+    </ul>
+    <a class="nav-cta" href="security.html">View Verified Contracts</a>
+    <div class="wallet-widget">
+      <button id="pwa-install-btn" class="nav-cta" type="button" style="display:none;">Install app</button>
+      <a href="dashboard.html" id="wallet-dashboard-link" style="display:none;">Dashboard</a>
+      <span id="wallet-status"></span>
+      <button id="wallet-connect-btn" class="nav-cta" type="button">Connect Wallet</button>
+    </div>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="how-it-works.html">How it works</a>
+    <a href="courses.html" aria-current="page">Courses</a>
+    <a href="tokenomics.html">Tokenomics</a>
+    <a href="roadmap.html">Roadmap</a>
+    <a href="security.html">Security</a>
+    <a href="community.html">Community</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+</nav>
+
+<div class="lesson-nav">
+  <a href="solidity-basics.html">← Course overview</a>
+  <div class="dots">
+    <span class="dot done active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+  <a href="mission-02.html">Mission 02 →</a>
+</div>
+
+<main id="main">
+  <div id="gate-locked" class="gate-locked" style="display:none;">
+    <div class="wrap">
+      <div class="gate-locked-panel">
+        <span class="eyebrow">Locked</span>
+        <h2>Not yet.</h2>
+        <p id="gate-locked-message" class="form-note" style="font-size:1rem;"></p>
+        <button class="btn-primary" id="gate-recheck-btn" type="button">Check again</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="gate-content" style="display:none;">
+    <header class="hero">
+      <div class="wrap">
+        <div>
+          <span class="eyebrow">GradLearn · Solidity Basics · Mission 01</span>
+          <h1>Mission 01 — The Blockchain Locker</h1>
+          <p class="lede">Lesson 1: Syntax, Data Types &amp; State Variables</p>
+          
+          <ul class="lesson-objectives">
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> read and write the basic structure of a Solidity file</li>
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> choose the right data type for a piece of data</li>
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> declare, read and change state variables</li>
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> explain the difference between what a contract remembers permanently (storage) and data that disappears after a call</li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <div class="wrap">
+<div class="lesson-section">
+<span class="lesson-tag">THEORY</span>
+<h3>1.1 THEORY — What is Solidity?</h3>
+<p>Simply: Solidity is the language you use to write programs — called smart contracts — that run on Ethereum and compatible blockchains.</p>
+<p>Technically: Solidity compiles to EVM bytecode. That bytecode is stored on-chain and executed by every node in the network whenever a transaction calls it. There is no single server — thousands of computers run the same code and must agree on the result.</p>
+<div class="lesson-callout">You write Solidity source → the compiler produces bytecode → it's deployed to the blockchain → every node executes it.</div>
+<p>Prediction question: Solidity is primarily used to write —
+A. Mobile apps  B. Smart contracts  C. Operating systems  D. Databases</p>
+<details class="reveal"><summary>Reveal</summary><div class="reveal-body"><p>B. Solidity targets the EVM, not phones, kernels or databases.</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">ANALOGY</span>
+<h3>1.2 ANALOGY — The vending machine in a public square</h3>
+<p>A smart contract is like a vending machine bolted into a public square. Anyone can walk up, follow its rules, and get a result. Nobody can quietly rewrite the rules inside once it's installed, and everyone can see every sale it has ever made.</p>
+<p>A contract's state variables are the machine's internal counters: how many drinks are left, how much money is inside. They persist between customers.</p>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">EXAMPLE</span>
+<h3>1.3 EXAMPLE — Anatomy of a Contract</h3>
+<p>We build this up piece by piece.</p>
+<p>Step 1 — the shell</p>
+<div class="code-block"><pre><code>contract Locker {
+}</code></pre></div>
+<p>A contract is similar to a class in object-oriented languages: a template with its own data and behavior.</p>
+<p>Step 2 — the compiler version</p>
+<div class="code-block"><pre><code>pragma solidity ^0.8.24;</code></pre></div>
+<p>"Compile this with version 0.8.24 or a newer 0.8.x version." The <code>^</code> allows newer patch versions — which is why GradLearn also tells you to pick exactly 0.8.24 in Remix.</p>
+<p>Step 3 — add state</p>
+<div class="code-block"><pre><code>contract Locker {
+  uint256 number;
+}</code></pre></div>
+<p>Full file:</p>
+<div class="code-block"><pre><code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+contract Locker {
+  uint256 number;
+}</code></pre></div>
+<ul><li><code>// SPDX-License-Identifier: MIT</code> — a machine-readable license tag. The compiler warns if it's missing. Etherscan also asks for it during verification.</li><li><code>pragma solidity ^0.8.24;</code> — the compiler version rule.</li><li><code>contract Locker { ... }</code> — defines a contract named Locker.</li><li><code>uint256 number;</code> — a state variable: declared at contract level, stored permanently in contract storage.</li></ul>
+<p>Syntax rules to remember:</p>
+<ul><li>Every statement ends with <code>;</code></li><li>Blocks use <code>{ }</code></li><li><code>//</code> starts a single-line comment, <code>/* ... */</code> a multi-line comment</li><li>Names are case-sensitive: <code>Owner</code> and <code>owner</code> are different</li></ul>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">THEORY + EXAMPLE</span>
+<h3>1.4 THEORY + EXAMPLE — Data Types, Defaults &amp; Integer Boundaries</h3>
+<div class="code-block"><pre><code>uint256 age;
+bool active;
+address owner;
+string name;</code></pre></div>
+<table class="lesson-table"><thead><tr><th>Type</th><th>Holds</th><th>Default value</th></tr></thead><tbody><tr><td><code>uint256</code></td><td>whole numbers from 0 to 2^256 − 1</td><td>0</td></tr><tr><td><code>bool</code></td><td>true or false</td><td>false</td></tr><tr><td><code>address</code></td><td>a 20-byte account or contract identifier</td><td>address(0) (0x000…000)</td></tr><tr><td><code>string</code></td><td>UTF-8 text</td><td>""  (empty)</td></tr></tbody></table>
+<p>Key facts:</p>
+<ul><li>Every variable starts at its default value. There is no "undefined" or "null" in Solidity.</li><li><code>uint</code> means unsigned — it cannot be negative. There are smaller sizes (<code>uint8</code> holds 0–255), but <code>uint256</code> is the standard choice for counts and balances.</li><li>Since Solidity 0.8.0, arithmetic is checked: if a result would go above the maximum or below zero, the transaction reverts instead of silently wrapping around.</li><li><code>string</code> is more expensive to store than value types like <code>uint256</code> and <code>bool</code>.</li></ul>
+<p>INTERACTIVE — Overflow prediction</p>
+<div class="code-block"><pre><code>uint8 public small = 255;
+
+function bump() public {
+  small = small + 1;
+}</code></pre></div>
+<p>Predict: what happens when you call bump()?</p>
+<details class="reveal"><summary>Reveal</summary><div class="reveal-body"><p>The transaction reverts with an arithmetic overflow error, and small stays 255. In old Solidity (before 0.8) it would have wrapped silently to 0 — a source of real exploits. Checked arithmetic is one reason the course pins a modern compiler.</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">THEORY</span>
+<h3>1.5 THEORY — Where Data Lives: Storage vs Temporary Data</h3>
+<p>INTERACTIVE — Pick the right type for a student registry. Cover the right column and decide for yourself first.</p>
+<details class="reveal"><summary>Reveal the types</summary><div class="reveal-body"><table class="lesson-table"><thead><tr><th>Field</th><th>Type</th></tr></thead><tbody><tr><td>Student's wallet address</td><td><code>address</code></td></tr><tr><td>Is enrolled?</td><td><code>bool</code></td></tr><tr><td>Age</td><td><code>uint256</code></td></tr><tr><td>Name</td><td><code>string</code></td></tr><tr><td>Temperature (can be negative)</td><td><code>int256</code> — signed integer</td></tr></tbody></table></div></details>
+<table class="lesson-table"><thead><tr><th>Location</th><th>Lifetime</th><th>Analogy</th></tr></thead><tbody><tr><td><code>storage</code></td><td>Permanent, on-chain, between transactions</td><td>Writing in the locker's logbook</td></tr><tr><td><code>memory</code></td><td>Only during one function call</td><td>Scratch paper, thrown away after</td></tr><tr><td><code>calldata</code></td><td>Only during one call; read-only input data</td><td>The sealed envelope a caller hands you</td></tr></tbody></table>
+<p>In this lesson you only need to know:</p>
+<ul><li>State variables (declared at contract level) → storage, permanent.</li><li>Function parameters and local variables → temporary, gone when the call ends.</li></ul>
+<p>Mission 03 covers memory and calldata in detail.</p>
+<div class="code-block"><pre><code>uint256 public total; // storage
+
+function add(uint256 amount) public { // amount is temporary
+  uint256 doubled = amount * 2; // doubled is temporary
+  total = total + doubled;
+}</code></pre></div>
+<p>INTERACTIVE — State tracker. Fill in the table before revealing:</p>
+<details class="reveal"><summary>Reveal</summary><div class="reveal-body"><table class="lesson-table"><thead><tr><th>Step</th><th>Call</th><th>amount</th><th>doubled</th><th>total after</th></tr></thead><tbody><tr><td>0 (deploy)</td><td>—</td><td>—</td><td>—</td><td>0</td></tr><tr><td>1</td><td>add(3)</td><td>3</td><td>6</td><td>6</td></tr><tr><td>2</td><td>add(10)</td><td>10</td><td>20</td><td>26</td></tr></tbody></table></div></details>
+<p>After each call, amount and doubled no longer exist. Only total survives, because it lives in storage.</p>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">PRACTICE</span>
+<h3>1.6 PRACTICE — Build a Student Profile</h3>
+<div class="code-block"><pre><code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+contract StudentProfile {
+  string public name;
+  uint256 public age;
+  bool public enrolled;
+}</code></pre></div>
+<p>Do this in Remix:</p>
+<ol><li>Create a new file StudentProfile.sol and type the contract (typing beats pasting while you learn).</li><li>Open the Solidity Compiler tab, select 0.8.24, click Compile.</li><li>Open Deploy &amp; Run Transactions, set Environment to Remix VM (a local simulated blockchain — no wallet, no real network). Click Deploy.</li><li>Expand the deployed contract and click each getter: name, age, enrolled. Note the default values.</li><li>Notice there's no way to change anything. Keep that observation — you'll fix it next.</li></ol>
+<div class="lesson-callout">Why public? Marking a state variable public makes the compiler generate a getter function for it. You didn't write name() — the compiler did.</div>
+<p>Important: public controls whether a getter is generated. It does not control secrecy. Everything stored on a public blockchain can be read by anyone, including private variables (see 1.10).</p>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">EXAMPLE</span>
+<h3>1.7 EXAMPLE — Changing State with a Function (preview)</h3>
+<p>Functions get a full lesson in Mission 02. For now, just the shape:</p>
+<div class="code-block"><pre><code>uint256 public score = 10;
+
+function increaseScore() public {
+  score = score + 5;
+}</code></pre></div>
+<p>Code prediction: What is score after calling increaseScore() twice?
+A. 10  B. 15  C. 20  D. 25</p>
+<details class="reveal"><summary>Reveal</summary><div class="reveal-body"><p>C — 20. 10 → 15 → 20. Each call reads the current stored value and adds 5. Run it in Remix and confirm.</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">EXAMPLE</span>
+<h3>1.8 EXAMPLE — Giving the Locker an Owner (constructor preview)</h3>
+<p>A constructor runs exactly once — at deployment — and is where you set initial values. <code>msg.sender</code> is the address that sent the current transaction (explained fully in Mission 02). During deployment, that's the deployer.</p>
+<div class="code-block"><pre><code>address public owner;
+
+constructor() {
+  owner = msg.sender;
+}</code></pre></div>
+<p>Without this, owner would stay at its default value, address(0), and nobody would ever be the owner.</p>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">DEBUG</span>
+<h3>1.9 DEBUG — The Broken Counter</h3>
+<div class="code-block"><pre><code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+contract Counter {
+  uint256 public count
+
+  function increase() public {
+    count = count + 1;
+  }
+}</code></pre></div>
+<p>Task: Paste it into Remix, compile, read the error message, and fix it yourself.</p>
+<details class="reveal"><summary>Hint</summary><div class="reveal-body"><p>The error points near the function line, but the problem is on the line just above it. What does every statement need at its end?</p></div></details>
+<details class="reveal"><summary>Reveal fix</summary><div class="reveal-body"><p>Missing semicolon: <code>uint256 public count;</code> Compiler errors often point at the line after the real mistake, because that's where the compiler realized something was wrong. Always check the line above too.</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">CHECK</span>
+<h3>1.10 CHECK — Knowledge Check</h3>
+<p>Code reading challenge</p>
+<div class="code-block"><pre><code>contract Vault {
+  uint256 public balance = 100;
+
+  function add(uint256 amount) public {
+    balance += amount;
+  }
+}</code></pre></div>
+<ol><li>What is stored permanently?</li><li>What is amount?</li><li>What happens when add(50) is called?</li><li>What is balance afterwards?</li></ol>
+<details class="reveal"><summary>Reveal</summary><div class="reveal-body"><p>1. balance, in storage.
+2. A temporary parameter, gone after the call.
+3. balance is read, 50 is added, the result is written back to storage.
+4. 150.
+
+Security flag: nothing checks who called add. Anyone can inflate balance. Mission 02 exists to fix this. Flag it, don't fix it yet.</p></div></details>
+<p>Answer in your head or notebook, then reveal.</p>
+<ol><li>Which type represents a wallet address?</li><li>Where does a variable declared at contract level live?</li><li>What does public do to a state variable?</li><li>True or false: a private variable's value is hidden from everyone except the contract.</li><li>What is the default value of an unset bool?</li></ol>
+<details class="reveal"><summary>Reveal</summary><div class="reveal-body"><p>1. address
+2. In permanent contract storage.
+3. It makes the compiler generate a getter function.
+4. False. Anyone can read raw contract storage from outside the chain. private only stops other contracts (including inheriting ones) from accessing the variable in Solidity code.
+5. false</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">MINI TEST</span>
+<h3>1.11 MINI TEST — Lesson 1 (pass: 4/5)</h3>
+<p>Write your answers down before revealing.</p>
+<div class="lesson-quiz-q"><div class="q-text">Q1. uint256 x = 5; x = x + 3; — what is x?</div></div>
+<div class="lesson-quiz-q"><div class="q-text">Q2. What happens here in Solidity 0.8.24?
+uint256 public n = 0;
+function down() public { n = n - 1; }</div></div>
+<div class="lesson-quiz-q"><div class="q-text">Q3. Which line is a compile error?
+bool public open = true; // line A
+uint256 public count = -1; // line B
+address public boss; // line C</div></div>
+<div class="lesson-quiz-q"><div class="q-text">Q4. After deployment, what does boss() return if nothing ever assigns it?</div></div>
+<div class="lesson-quiz-q"><div class="q-text">Q5. A function parameter amount is used inside a function. After the transaction ends, where is amount stored?</div></div>
+<details class="reveal"><summary>Reveal answers</summary><div class="reveal-body"><p>1. 8
+2. The call reverts (underflow below 0). n stays 0.
+3. Line B — a uint256 cannot hold a negative number.
+4. address(0) — 0x0000000000000000000000000000000000000000
+5. Nowhere. Parameters are temporary. Only storage survives the transaction.</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">BOSS</span>
+<h3>MISSION 01 — BOSS FIGHT: The Blockchain Locker</h3>
+<p>You've been hired to build a digital locker. It must remember who owns it and store a number.</p>
+<div class="code-block"><pre><code>Locker
+├── owner (address) — set to the deployer
+├── storedNumber (uint256)
+├── active (bool)
+└── name (string)</code></pre></div>
+<p>Requirements:</p>
+<ul><li>Declare all four state variables with appropriate types.</li><li>Make them public so they can be read.</li><li>Set owner to the deployer in a constructor.</li><li>Write at least one function that changes storedNumber.</li><li>Write one function that changes name or active.</li><li>Compile with zero errors and zero warnings on 0.8.24.</li></ul>
+<p>Starter skeleton — replace every /* TODO */ yourself:</p>
+<div class="code-block"><pre><code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+contract Locker {
+  /* TODO */ public owner;
+  /* TODO */ public storedNumber;
+  /* TODO */ public active;
+  /* TODO */ public name;
+
+  constructor() {
+    /* TODO: who deployed me? */
+  }
+
+  function setNumber(/* TODO: one parameter */) public {
+    /* TODO */
+  }
+
+  // TODO: one more function that changes name or active
+}</code></pre></div>
+<p>Submit:</p>
+<ol><li>Your source code</li><li>A screenshot of a successful compile</li><li>A screenshot showing owner() returns your Remix account address after deployment</li><li>One paragraph explaining what each variable is for and the difference between storage and temporary data, in your own words</li></ol>
+<h4 style="color:var(--parchment); font-family:var(--font-display); font-size:1.05rem; margin: 1.6rem 0 0.4rem;">Boss success condition</h4>
+<ul class="boss-checklist" data-mission="mission-01">
+<li><input type="checkbox" value="item-0" id="boss-item-0"><label for="boss-item-0">Contract compiles with no errors</label></li>
+<li><input type="checkbox" value="item-1" id="boss-item-1"><label for="boss-item-1">All four state variables present with correct types</label></li>
+<li><input type="checkbox" value="item-2" id="boss-item-2"><label for="boss-item-2">owner is set by the constructor</label></li>
+<li><input type="checkbox" value="item-3" id="boss-item-3"><label for="boss-item-3">At least one working state-changing function</label></li>
+<li><input type="checkbox" value="item-4" id="boss-item-4"><label for="boss-item-4">Student explains storage vs temporary data in their own words</label></li>
+<li><input type="checkbox" value="item-5" id="boss-item-5"><label for="boss-item-5">Mini test passed (4/5)</label></li>
+</ul>
+<div class="lesson-callout">Mission 02 unlocks once this boss fight is submitted.</div>
+<div class="lesson-complete-bar">
+<button class="btn-primary" id="mission-complete-btn" type="button" disabled>Mark mission complete</button>
+<p id="mission-complete-feedback" class="form-note"></p>
+</div>
+</div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-mark">GradToken<span class="dot">.</span></div>
+        <p class="footer-tag">Learn-to-earn, verified on-chain. Built in the open, one tested phase at a time.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Project</h4>
+          <a href="how-it-works.html">How it works</a>
+          <a href="tokenomics.html">Tokenomics</a>
+          <a href="roadmap.html">Roadmap</a>
+        </div>
+        <div class="footer-col">
+          <h4>Verify</h4>
+          <a href="security.html">Security &amp; contracts</a>
+          <a href="https://sepolia.etherscan.io/address/0x95A69bcbF176497241887f9CcFd8EcBC4e596587#code" target="_blank" rel="noopener noreferrer">Etherscan</a>
+        </div>
+        <div class="footer-col">
+          <h4>Community</h4>
+          <a href="community.html">All channels</a>
+          <a href="https://t.me/+I9Klso5akAAzMTFk" target="_blank" rel="noopener noreferrer">Telegram</a>
+          <a href="https://discord.gg/AKAp2nCTQ4" target="_blank" rel="noopener noreferrer">Discord</a>
+          <a href="https://x.com/GradToken" target="_blank" rel="noopener noreferrer">X (Twitter)</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="disclaimer">Sepolia is a public test network. GRAD shown on this page has no monetary value and cannot be bought or sold. Nothing here is financial advice or an offer to sell securities.</p>
+      <span class="copyright">© 2026 GradToken</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/wallet-connect.js" defer></script>
+<script src="js/mission-gate.js" defer></script>
+<script src="js/lesson.js" defer></script>
+<script src="js/pwa-register.js" defer></script>
+</body>
+</html>

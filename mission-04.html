@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mission 04 — Put It On-Chain — GradLearn | GradToken</title>
+<meta name="description" content="GradLearn Solidity Basics, Mission 04: Testing, Deploying &amp; Verifying on Sepolia.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; manifest-src 'self'; worker-src 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0B1F3A">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+</head>
+<body data-requires-missions="mission-03">
+
+<a class="skip-link" href="#main">Skip to content</a>
+<nav class="nav">
+  <div class="wrap">
+    <a href="index.html" class="nav-mark">GradToken<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="how-it-works.html">How it works</a></li>
+      <li><a href="courses.html" aria-current="page">Courses</a></li>
+      <li><a href="tokenomics.html">Tokenomics</a></li>
+      <li><a href="roadmap.html">Roadmap</a></li>
+      <li><a href="security.html">Security</a></li>
+      <li><a href="community.html">Community</a></li>
+    </ul>
+    <a class="nav-cta" href="security.html">View Verified Contracts</a>
+    <div class="wallet-widget">
+      <button id="pwa-install-btn" class="nav-cta" type="button" style="display:none;">Install app</button>
+      <a href="dashboard.html" id="wallet-dashboard-link" style="display:none;">Dashboard</a>
+      <span id="wallet-status"></span>
+      <button id="wallet-connect-btn" class="nav-cta" type="button">Connect Wallet</button>
+    </div>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="how-it-works.html">How it works</a>
+    <a href="courses.html" aria-current="page">Courses</a>
+    <a href="tokenomics.html">Tokenomics</a>
+    <a href="roadmap.html">Roadmap</a>
+    <a href="security.html">Security</a>
+    <a href="community.html">Community</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+</nav>
+
+<div class="lesson-nav">
+  <a href="mission-03.html">← Mission 03</a>
+  <div class="dots">
+    <span class="dot done"></span>
+    <span class="dot done"></span>
+    <span class="dot done"></span>
+    <span class="dot active"></span>
+  </div>
+  <a href="solidity-basics-exam.html">Final exam →</a>
+</div>
+
+<main id="main">
+  <div id="gate-locked" class="gate-locked" style="display:none;">
+    <div class="wrap">
+      <div class="gate-locked-panel">
+        <span class="eyebrow">Locked</span>
+        <h2>Not yet.</h2>
+        <p id="gate-locked-message" class="form-note" style="font-size:1rem;"></p>
+        <button class="btn-primary" id="gate-recheck-btn" type="button">Check again</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="gate-content" style="display:none;">
+    <header class="hero">
+      <div class="wrap">
+        <div>
+          <span class="eyebrow">GradLearn · Solidity Basics · Mission 04</span>
+          <h1>Mission 04 — Put It On-Chain</h1>
+          <p class="lede">Lesson 4: Testing, Deploying &amp; Verifying on Sepolia</p>
+          <p class="lede" style="font-size:0.95rem;">Dependency: Lessons 1–3, and a working Mission 02 or Mission 03 contract.</p>
+          <ul class="lesson-objectives">
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> write automated tests covering success paths and failure paths</li>
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> explain what deployment, testnets and verification actually are</li>
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> deploy a contract to Sepolia from Remix with MetaMask</li>
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> verify it on Etherscan and interact with it there</li>
+<li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> diagnose the common reasons verification fails</li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <div class="wrap">
+<div class="lesson-section">
+<span class="lesson-tag">THEORY</span>
+<h3>4.1 THEORY — Why Test, and What "Deploy" and "Verify" Mean</h3>
+<p>Testing: once deployed, your contract's code can't be edited. A bug is permanent, and it may hold other people's money. Tests are how you find bugs while they're still free to fix. Clicking buttons in Remix (what you've done so far) is manual testing; this mission adds automated tests that re-check everything in seconds whenever you change code.</p>
+<p>A testnet is a public blockchain that works like Ethereum mainnet but uses ETH with no real value. Sepolia is Ethereum's main testnet for application developers. Test ETH comes free from faucets.</p>
+<p>Deploying means sending a special transaction with no recipient, whose data is your compiled bytecode (plus any constructor arguments). The network runs the constructor, stores the resulting code, and assigns the contract a permanent address.</p>
+<p>Verifying means publishing your source code and compiler settings to a block explorer like Etherscan. Etherscan compiles your source with the exact same settings and checks the output matches the bytecode on-chain. If it matches, it shows your source publicly with a "verified" mark and adds Read/Write buttons. Anyone can now check that the code does what you claim.</p>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">ANALOGY</span>
+<h3>4.2 ANALOGY — Opening a Restaurant</h3>
+<ul><li>Testing = the kitchen rehearsal before opening night. You deliberately try the awkward orders — a customer who can't pay, an order for a dish you don't have — not just the easy ones.</li><li>Deploying = opening the doors. The restaurant now has a public address, and the building can't be remodeled.</li><li>Verifying = publishing the full recipe book, with an inspector who cooks every dish from your recipes and certifies it tastes identical to what you serve. Customers don't have to trust you — they can check.</li><li>Sepolia = a practice restaurant where diners pay with play money.</li></ul>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">THEORY</span>
+<h3>4.3 THEORY — What to Test — PART A: TEST</h3>
+<p>For every function, test:</p>
+<table class="lesson-table"><thead><tr><th>Category</th><th>Question</th><th>Example (SecureVault)</th></tr></thead><tbody><tr><td>Happy path</td><td>Does it work when used correctly?</td><td>Owner sets value to 42 → value is 42</td></tr><tr><td>Access control</td><td>Are unauthorized callers rejected?</td><td>Non-owner sets value → reverts "Not owner"</td></tr><tr><td>Input validation</td><td>Are bad inputs rejected?</td><td>Deposit of 0 → reverts</td></tr><tr><td>Edge cases</td><td>What about boundaries?</td><td>Withdraw exactly the full balance; withdraw 1 wei more</td></tr><tr><td>State after failure</td><td>Is state unchanged after a revert?</td><td>Failed withdraw leaves balance as it was</td></tr><tr><td>Value movement</td><td>Did ETH actually move?</td><td>Withdrawer's ETH balance increases by the amount</td></tr></tbody></table>
+<div class="lesson-callout">Rule: every require, revert and modifier in your contract should have at least one test that makes it fail on purpose. Failure paths are where security bugs hide.</div>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">EXAMPLE</span>
+<h3>4.4 EXAMPLE — Automated Tests with the Remix Unit Testing Plugin</h3>
+<p>Remix has a built-in test runner. Tests are written in Solidity.</p>
+<p>Setup:</p>
+<ol><li>In Remix, open Plugin Manager and activate Solidity Unit Testing (the flask icon).</li><li>Put your contract at contracts/SecureVault.sol (the SecureVault from 2.8).</li><li>Create contracts/NotOwner.sol (helper, below).</li><li>Create tests/SecureVault_test.sol. Test files must end in _test.sol.</li></ol>
+<p>How the runner works:</p>
+<ul><li>Every public function in the test contract is a test, except special hooks such as beforeEach (runs before every test) and beforeAll (runs once at the start).</li><li>Assert.equal(actual, expected, message) and Assert.ok(condition, message) report pass/fail.</li><li>A comment /// #value: &lt;wei&gt; above a payable test function sends that much ETH with the test call.</li></ul>
+<div class="lesson-callout">Important: when the test contract deploys SecureVault with new, the test contract is msg.sender, so the test contract becomes the owner. To test a non-owner, you need a second contract to make the call — that's the job of the helper.</div>
+<p>Helper — contracts/NotOwner.sol:</p>
+<div class="code-block"><pre><code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import "./SecureVault.sol";
+
+// Plays the role of "Bob": a caller who is not the owner.
+contract NotOwner {
+  function trySetValue(SecureVault vault, uint256 newValue) external {
+    vault.setValue(newValue);
+  }
+}</code></pre></div>
+<p>Test file — tests/SecureVault_test.sol:</p>
+<div class="code-block"><pre><code>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import "remix_tests.sol";
+import "../contracts/SecureVault.sol";
+import "../contracts/NotOwner.sol";
+
+contract SecureVaultTest {
+  SecureVault vault;
+  NotOwner stranger;
+
+  // Fresh contracts before every test, so tests don't affect each other
+  function beforeEach() public {
+    vault = new SecureVault();
+    stranger = new NotOwner();
+  }
+
+  // ---------- Access control ----------
+  function deployerIsOwner() public {
+    Assert.equal(vault.owner(), address(this), "Deployer should be owner");
+  }
+
+  function ownerCanSetValue() public {
+    vault.setValue(42);
+    Assert.equal(vault.value(), uint256(42), "Value should be 42");
+  }
+
+  function nonOwnerCannotSetValue() public {
+    try stranger.trySetValue(vault, 99) {
+      Assert.ok(false, "Non-owner call should have reverted");
+    } catch Error(string memory reason) {
+      Assert.equal(reason, "Not owner", "Wrong revert reason");
+    } catch {
+      Assert.ok(false, "Reverted for an unexpected reason");
+    }
+    Assert.equal(vault.value(), uint256(0), "Value must be unchanged");
+  }
+
+  // ---------- Deposits ----------
+  /// #value: 1000000000000000000
+  function depositRecordsBalance() public payable {
+    vault.deposit{value: msg.value}();
+    Assert.equal(vault.balances(address(this)), msg.value, "Balance not recorded");
+  }
+
+  function zeroDepositReverts() public {
+    try vault.deposit{value: 0}() {
+      Assert.ok(false, "Zero deposit should revert");
+    } catch Error(string memory reason) {
+      Assert.equal(reason, "Must deposit ETH", "Wrong revert reason");
+    }
+  }
+
+  // ---------- Withdrawals ----------
+  /// #value: 1000000000000000000
+  function withdrawReturnsEth() public payable {
+    vault.deposit{value: msg.value}();
+    uint256 before = address(this).balance;
+    vault.withdraw(msg.value);
+    Assert.equal(vault.balances(address(this)), uint256(0), "Balance should be 0");
+    Assert.equal(address(this).balance, before + msg.value, "ETH not received");
+  }
+
+  /// #value: 1000000000000000000
+  function overWithdrawReverts() public payable {
+    vault.deposit{value: msg.value}();
+    try vault.withdraw(msg.value + 1) {
+      Assert.ok(false, "Over-withdraw should revert");
+    } catch Error(string memory reason) {
+      Assert.equal(reason, "Insufficient balance", "Wrong revert reason");
+    }
+    Assert.equal(vault.balances(address(this)), msg.value, "Balance must be unchanged");
+  }
+
+  // The vault sends ETH back to this contract during withdraw,
+  // so the test contract must be able to receive it.
+  receive() external payable {}
+}</code></pre></div>
+<p>How the failure tests work — try / catch:</p>
+<ul><li>try someContract.f() { ... } — the first block runs only if the call succeeded. In a failure test, that means the test should fail, so we call Assert.ok(false, ...).</li><li>catch Error(string memory reason) { ... } — runs if the call reverted with a require message. We check it's the expected message, so the test doesn't pass by accident when the call fails for a different reason.</li><li>try/catch only works on calls to other contracts — another reason the helper contract exists.</li></ul>
+<p>Run it: open the Solidity Unit Testing tab, select the test file, click Run. Every test should show a green tick.</p>
+<p>Testing custom errors — if a function reverts with a custom error instead of a string, catch the raw error data and compare its first 4 bytes (the error's selector):</p>
+<div class="code-block"><pre><code>try registry.updateScore(someone, 90) {
+  Assert.ok(false, "Should revert");
+} catch (bytes memory data) {
+  Assert.ok(bytes4(data) == StudentRegistry.Unauthorized.selector, "Wrong error");
+}</code></pre></div>
+<div class="lesson-callout">Beyond the course: Foundry (optional). This box is additional material, not required for GradLearn. Professional teams often test with Foundry, a command-line toolkit where tests are also written in Solidity but use "cheatcodes" to control the test environment. vm.prank removes the need for helper contracts. If you continue past this course, Foundry is a strong next step.</div>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">INTERACTIVE</span>
+<h3>4.5 INTERACTIVE — Will This Test Catch the Bug?</h3>
+<p>A teammate "optimizes" SecureVault's withdraw and accidentally deletes the require(balances[msg.sender] &gt;= amount, ...) line. Look at the test suite in 4.4.</p>
+<ol><li>Which test fails?</li><li>Why doesn't the contract just let the over-withdraw through? (Hint: Lesson 1, checked arithmetic.)</li><li>Does the test still pass, fail, or fail for the "wrong reason"?</li></ol>
+<details class="reveal"><summary>Reveal</summary><div class="reveal-body"><p>1. overWithdrawReverts.
+2. balances[msg.sender] -= amount would go below zero, so 0.8's checked arithmetic reverts — but with a Panic error, not "Insufficient balance".
+3. The call still reverts, but not with an Error(string), so neither the success block nor the catch Error block runs. Since that try has no fallback catch, the revert propagates and the test fails. That's why it's worth checking the reason: the contract is still "safe" by accident, but users would get a confusing error, and the test flags that the intended check is gone.</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">PRACTICE</span>
+<h3>4.6 PRACTICE — Test Your Own Contract</h3>
+<p>Write a test file for your Mission 03 registry (or your Mission 02 vault). Minimum:</p>
+<ul><li>one happy-path test per state-changing function</li><li>one failure test per require, revert and modifier</li><li>at least one test that checks state is unchanged after a failed call</li></ul>
+<p>Every test should have a name that says what it checks, like nonOwnerCannotUpdateScore, not test3.</p>
+<div class="lesson-callout">Remix's test runner doesn't check events directly. Check your events manually in the Remix terminal logs and screenshot them. (In Foundry, vm.expectEmit does this automatically.)</div>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">THEORY + PRACTICE</span>
+<h3>4.7 THEORY + PRACTICE — Deploy to Sepolia — PART B: DEPLOY</h3>
+<p>Safety first:</p>
+<ul><li>Use a separate development wallet that has never held real funds.</li><li>Never share, paste or commit your seed phrase or private key — not to Remix, not to an AI tutor, not to GitHub. No legitimate step in this course needs it.</li><li>Sepolia ETH has no value. Anyone offering to sell it to you is running a scam.</li></ul>
+<p>Steps:</p>
+<ol><li>Get test ETH. In MetaMask, switch to the Sepolia network (enable "show test networks" in settings if you can't see it). Get Sepolia ETH from a faucet. A small amount (around 0.05 Sepolia ETH) is plenty for this course.</li><li>Compile your contract in Remix with 0.8.24. Note two settings on the compiler tab — you'll need them for verification: optimization on/off (and runs, if on), and the EVM version under Advanced Configurations (leave it on default and simply note it).</li><li>Connect. In Deploy &amp; Run, set Environment to Injected Provider – MetaMask. Approve the connection. Check that Remix shows the Sepolia network and your dev account.</li><li>Constructor arguments: if your constructor takes parameters, fill them in next to Deploy and write down exactly what you entered.</li><li>Deploy. Click Deploy and confirm in MetaMask. Wait for confirmation (usually a few seconds).</li><li>Record your evidence in a notes file: contract address, deployment transaction hash, compiler version, optimization setting, EVM version, constructor arguments, if any.</li><li>Interact. Make at least one write call (costs Sepolia gas, needs MetaMask confirmation) and one read call. Record the write transaction's hash.</li><li>Open https://sepolia.etherscan.io/address/&lt;your address&gt; and find your deployment and write transactions.</li></ol>
+<p>INTERACTIVE — Name the artifact. Match each item to what it is.</p>
+<details class="reveal"><summary>Reveal</summary><div class="reveal-body"><table class="lesson-table"><thead><tr><th>Item</th><th>What it is</th></tr></thead><tbody><tr><td>Address shown under "Deployed Contracts"</td><td>The contract address — where your contract lives, permanently</td></tr><tr><td>The long 0x… hex in the Remix terminal after Deploy</td><td>The transaction hash — the ID of the deployment transaction</td></tr><tr><td>The JSON describing function names and parameter types</td><td>The ABI — the interface that tells wallets and apps how to call your contract</td></tr><tr><td>The hex blob produced by the compiler</td><td>The bytecode — what actually runs on the EVM, and what Etherscan compares during verification</td></tr></tbody></table></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">PRACTICE</span>
+<h3>4.8 PRACTICE — Verify on Etherscan — PART C: VERIFY</h3>
+<p>Option 1 — Etherscan website ("Verify and Publish"):</p>
+<ol><li>Open your contract address on Sepolia Etherscan → Contract tab → Verify and Publish.</li><li>Compiler type: Solidity (Single file). Compiler version: the exact version you compiled with — the entry starting v0.8.24+commit…. License: MIT (match your SPDX line).</li><li>Paste your full source code, exactly as compiled.</li><li>Under advanced settings, set optimization and EVM version to match what Remix used.</li><li>If your constructor had arguments, Etherscan usually detects them from the deployment transaction. If asked, supply them ABI-encoded (Option 2 does this for you).</li><li>Submit. On success, the Contract tab shows a green tick and your source code.</li></ol>
+<p>Option 2 — Remix verification plugin:</p>
+<p>Activate Remix's Contract Verification plugin in the Plugin Manager. It reads your compiler settings from Remix and encodes constructor arguments for you. Etherscan verification through a plugin needs a free Etherscan API key from your Etherscan account — treat it like a password and don't share it or commit it.</p>
+<div class="lesson-callout">If your contract imports other files, single-file verification fails unless you flatten the source (Remix: right-click the file → Flatten) or use the plugin, which handles imports.</div>
+<p>After verifying: open the Read Contract and Write Contract tabs on Etherscan. Connect MetaMask on the Write tab and make one more write call from Etherscan itself. This proves anyone can interact with your verified contract without Remix.</p>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">DEBUG</span>
+<h3>4.9 DEBUG — Deployment Edition</h3>
+<p>Problem 1: "Bytecode mismatch" / "Unable to verify". Work through these in order and fix one thing at a time:</p>
+<ol><li>Compiler version. Must match the version Remix actually used, not just the pragma. ^0.8.24 allows 0.8.25, 0.8.26…, so if Remix auto-selected a newer version, select that one on Etherscan (or recompile with 0.8.24 and redeploy).</li><li>Optimization. On/off and the runs number must match exactly.</li><li>EVM version. Must match the Remix setting. Different compiler versions have different defaults, so check what Remix used rather than guessing.</li><li>Source code. Must be exactly what you compiled. Even adding a comment after deploying can cause a mismatch, because the compiler embeds a fingerprint of the source in the bytecode.</li><li>Constructor arguments. Must be the exact values used at deployment, correctly ABI-encoded.</li><li>Imports. Single-file verification needs a flattened file.</li></ol>
+<p>Problem 2: Diagnose the student. A student reports: "Remix says my contract compiled with 0.8.26+commit…. On Etherscan I picked v0.8.24 because that's what my pragma says. Verification fails."</p>
+<details class="reveal"><summary>Reveal</summary><div class="reveal-body"><p>The pragma ^0.8.24 allowed 0.8.26, and Remix used it. Etherscan must use the version that actually compiled the deployed bytecode. Fix: (1) select v0.8.26… on Etherscan, or (2) recompile with exactly 0.8.24 in Remix, redeploy, and verify with 0.8.24. Option 2 matches course policy.</p></div></details>
+<p>Problem 3: "Transaction failed" when deploying. Common causes: not enough Sepolia ETH for gas, MetaMask on the wrong network, or the constructor itself reverting (for example, a require in the constructor failing on the arguments you entered). Read the MetaMask error and the Remix terminal message first before guessing.</p>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">CHECK</span>
+<h3>4.10 CHECK — Knowledge Check</h3>
+<ol><li>What does verification actually prove?</li><li>Why deploy to Sepolia instead of mainnet while learning?</li><li>Your pragma is ^0.8.24. Is that enough information to verify?</li><li>What's the difference between a contract address and a transaction hash?</li><li>Why should every require in your contract have a failing test?</li></ol>
+<details class="reveal"><summary>Reveal</summary><div class="reveal-body"><p>1. That the published source code, compiled with the stated settings, produces exactly the bytecode running at that address. It proves what the code is — not that the code is bug-free or safe.
+2. Sepolia ETH has no value, so mistakes cost nothing, while everything else works like the real network.
+3. No. You need the exact compiler version used, plus optimization and EVM version settings.
+4. The address identifies the contract (where it lives). The transaction hash identifies one transaction (for example, the one that deployed it).
+5. Because a check that's never tested failing might not work — or might fail for the wrong reason — and failure paths are where security bugs hide.</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">MINI TEST</span>
+<h3>4.11 MINI TEST — Lesson 4 (pass: 4/5)</h3>
+
+<div class="lesson-quiz-q"><div class="q-text">Q1. In the Remix test runner, beforeEach deploys vault = new SecureVault();. Who is the vault's owner?</div></div>
+<div class="lesson-quiz-q"><div class="q-text">Q2. Why does SecureVaultTest need a receive() function?</div></div>
+<div class="lesson-quiz-q"><div class="q-text">Q3. A test does this. What's the weakness?
+try vault.withdraw(5 ether) {
+  Assert.ok(false, "Should revert");
+} catch {
+  Assert.ok(true, "Reverted");
+}</div></div>
+<div class="lesson-quiz-q"><div class="q-text">Q4. You deployed, then added a comment to your source "to explain it better," then tried to verify. It fails. Why?</div></div>
+<div class="lesson-quiz-q"><div class="q-text">Q5. Name three settings that must match between Remix and Etherscan for verification to succeed.</div></div>
+<details class="reveal"><summary>Reveal answers</summary><div class="reveal-body"><p>1. The test contract — it's msg.sender when new SecureVault() runs.
+2. withdraw sends ETH to msg.sender, which is the test contract. Without receive(), the transfer fails and the withdraw reverts with "ETH transfer failed".
+3. It accepts any revert, so it would pass even if the call failed for the wrong reason (a bug, a panic, a different require). Catch Error(string memory reason) and check the reason (or check the custom error selector).
+4. The compiler embeds a fingerprint of the exact source in the bytecode. Changed source means different bytecode. Verify the exact source you deployed.
+5. Any three of: compiler version, optimization on/off and runs, EVM version, (plus exact source code and constructor arguments).</p></div></details>
+</div>
+<div class="lesson-section">
+<span class="lesson-tag">BOSS</span>
+<h3>MISSION 04 — BOSS FIGHT: Mainnet Simulation</h3>
+<p>Take your Mission 03 registry (or Mission 02 vault) all the way to a verified public contract.</p>
+<p>Required evidence:</p>
+<ul><li>Test file with passing results screenshot (all green) — at least one happy-path test per state-changing function, at least one failure test per require / revert / modifier</li><li>Successful compile on 0.8.24 (screenshot showing version)</li><li>Sepolia contract address</li><li>Deployment transaction hash</li><li>Verified Sepolia Etherscan URL (green tick visible on Contract tab)</li><li>One write + one read interaction after deployment (transaction hash for the write)</li><li>One write made from Etherscan's Write Contract tab</li><li>Your settings record: compiler version, optimization, EVM version, constructor args</li></ul>
+<div class="lesson-callout">Reflection (3–5 sentences): What did a test catch — or what would it have caught — that manual clicking might have missed?</div>
+<h4 style="color:var(--parchment); font-family:var(--font-display); font-size:1.05rem; margin: 1.6rem 0 0.4rem;">Lesson 4 completion criteria</h4>
+<ul class="boss-checklist" data-mission="mission-04">
+<li><input type="checkbox" value="item-0" id="boss-item-0"><label for="boss-item-0">Automated tests written and all passing, including failure paths</label></li>
+<li><input type="checkbox" value="item-1" id="boss-item-1"><label for="boss-item-1">Contract deployed to Sepolia from a dev wallet</label></li>
+<li><input type="checkbox" value="item-2" id="boss-item-2"><label for="boss-item-2">Contract verified on Etherscan</label></li>
+<li><input type="checkbox" value="item-3" id="boss-item-3"><label for="boss-item-3">Interaction proven from both Remix and Etherscan</label></li>
+<li><input type="checkbox" value="item-4" id="boss-item-4"><label for="boss-item-4">Student can explain what verification does and does not prove</label></li>
+<li><input type="checkbox" value="item-5" id="boss-item-5"><label for="boss-item-5">Mini test passed (4/5)</label></li>
+</ul>
+<div class="lesson-callout">The Final Exam unlocks once this boss fight is submitted with a verified Etherscan link.</div>
+<div class="lesson-complete-bar">
+<button class="btn-primary" id="mission-complete-btn" type="button" disabled>Mark mission complete</button>
+<p id="mission-complete-feedback" class="form-note"></p>
+</div>
+</div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-mark">GradToken<span class="dot">.</span></div>
+        <p class="footer-tag">Learn-to-earn, verified on-chain. Built in the open, one tested phase at a time.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Project</h4>
+          <a href="how-it-works.html">How it works</a>
+          <a href="tokenomics.html">Tokenomics</a>
+          <a href="roadmap.html">Roadmap</a>
+        </div>
+        <div class="footer-col">
+          <h4>Verify</h4>
+          <a href="security.html">Security &amp; contracts</a>
+          <a href="https://sepolia.etherscan.io/address/0x95A69bcbF176497241887f9CcFd8EcBC4e596587#code" target="_blank" rel="noopener noreferrer">Etherscan</a>
+        </div>
+        <div class="footer-col">
+          <h4>Community</h4>
+          <a href="community.html">All channels</a>
+          <a href="https://t.me/+I9Klso5akAAzMTFk" target="_blank" rel="noopener noreferrer">Telegram</a>
+          <a href="https://discord.gg/AKAp2nCTQ4" target="_blank" rel="noopener noreferrer">Discord</a>
+          <a href="https://x.com/GradToken" target="_blank" rel="noopener noreferrer">X (Twitter)</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="disclaimer">Sepolia is a public test network. GRAD shown on this page has no monetary value and cannot be bought or sold. Nothing here is financial advice or an offer to sell securities.</p>
+      <span class="copyright">© 2026 GradToken</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/wallet-connect.js" defer></script>
+<script src="js/mission-gate.js" defer></script>
+<script src="js/lesson.js" defer></script>
+<script src="js/pwa-register.js" defer></script>
+</body>
+</html>
