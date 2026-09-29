@@ -742,3 +742,14 @@ a.stat-link{ text-decoration: none; }
 
 
 
+
+/* ---- Lesson pager: sticky bottom prev/next so students never scroll back up ---- */
+.pager-bar{ position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.7rem var(--edge); padding-bottom: calc(0.7rem + env(safe-area-inset-bottom, 0px)); background: rgba(7, 21, 39, 0.94); backdrop-filter: blur(10px); border-top: 1px solid var(--border-on-navy); }
+.pager-link{ color: var(--text-on-navy-muted); text-decoration: none; font-size: 0.92rem; font-weight: 600; padding: 0.55rem 0.9rem; border: 1px solid var(--border-on-navy); border-radius: 8px; white-space: nowrap; }
+.pager-link:hover, .pager-link:focus-visible{ color: var(--brass-bright); border-color: var(--brass-bright); }
+.pager-next{ background: var(--brass-bright); color: var(--ink-navy-deep); border-color: var(--brass-bright); }
+.pager-next:hover, .pager-next:focus-visible{ background: var(--brass); color: var(--ink-navy-deep); }
+.pager-label{ font-size: 0.8rem; color: var(--text-on-navy-muted); text-align: center; }
+body.has-pager{ padding-bottom: 4.5rem; }
+.pager-end{ text-decoration: none; display: inline-block; }
+@media (max-width: 480px){ .pager-label{ display: none; } .pager-link{ flex: 1; text-align: center; } }

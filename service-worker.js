@@ -22,7 +22,7 @@
 // Still bump CACHE_VERSION when the PRECACHE_URLS list itself changes
 // (a file added/removed), so the initial install fetches the right set.
 
-const CACHE_VERSION = "gradtoken-shell-v3";
+const CACHE_VERSION = "gradtoken-shell-v4";
 
 const PRECACHE_URLS = [
   "/index.html",

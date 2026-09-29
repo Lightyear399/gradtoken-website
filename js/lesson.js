@@ -113,8 +113,58 @@
     btn.addEventListener("click", markComplete);
   }
 
+
+  // Sticky bottom pager + end-of-lesson Next button.
+  // Reads the existing .lesson-nav links at the top of the page (prev / next),
+  // so no per-page HTML edits are needed. CSP-safe: classes only, no inline styles.
+  function buildPager() {
+    const top = document.querySelector(".lesson-nav");
+    if (!top) return;
+    const links = top.querySelectorAll(":scope > a");
+    if (links.length < 2) return;
+    const prev = links[0];
+    const next = links[links.length - 1];
+    const dots = top.querySelectorAll(".dots .dot");
+    let current = 0;
+    dots.forEach((d, i) => { if (d.classList.contains("active")) current = i + 1; });
+    const label = dots.length && current ? "Mission " + current + " of " + dots.length : "";
+
+    function makeLink(src, cls, isNext) {
+      const a = document.createElement("a");
+      a.className = cls;
+      a.href = src.getAttribute("href");
+      a.textContent = src.textContent.trim();
+      if (isNext) a.rel = "next"; else a.rel = "prev";
+      return a;
+    }
+
+    // 1) Sticky bar at the bottom of the viewport
+    const bar = document.createElement("nav");
+    bar.className = "pager-bar";
+    bar.setAttribute("aria-label", "Lesson navigation");
+    const mid = document.createElement("span");
+    mid.className = "pager-label";
+    mid.textContent = label;
+    bar.appendChild(makeLink(prev, "pager-link pager-prev", false));
+    bar.appendChild(mid);
+    bar.appendChild(makeLink(next, "pager-link pager-next", true));
+    document.body.appendChild(bar);
+    document.body.classList.add("has-pager");
+
+    // 2) Big Next button at the end of the lesson (under "Mark mission complete")
+    const completeBar = document.querySelector(".lesson-complete-bar");
+    if (completeBar) {
+      const end = document.createElement("a");
+      end.className = "btn-primary pager-end";
+      end.href = next.getAttribute("href");
+      end.textContent = next.textContent.trim();
+      completeBar.appendChild(end);
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     wireBossChecklist();
     wireCompleteButton();
+    buildPager();
   });
 })();
