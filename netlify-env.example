@@ -1,0 +1,21 @@
+# Netlify site environment variables (never commit real values).
+# SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY and SESSION_SECRET already exist for your current backend.
+SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+SESSION_SECRET=
+
+# Base network for rewards and certificates (your existing SEPOLIA_RPC_URL stays for the old Sepolia functions)
+BASE_CHAIN_ID=84532
+BASE_RPC_URL=https://sepolia.base.org
+REWARDS_ADDRESS=
+CERTIFICATE_ADDRESS=
+
+# Two different hot keys. The voucher signer is the address set on GradRewards; the minter holds MINTER_ROLE on GradCertificate.
+VOUCHER_SIGNER_KEY=
+CERTIFICATE_MINTER_KEY=
+
+# Admin wallets (lowercase addresses, comma separated). These can open the review screen and finalize courses.
+ADMIN_WALLETS=
+
+# Long random string; only your exam backend knows it (used by record-component)
+INTERNAL_SECRET=

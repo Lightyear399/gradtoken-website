@@ -22,7 +22,7 @@
 // Still bump CACHE_VERSION when the PRECACHE_URLS list itself changes
 // (a file added/removed), so the initial install fetches the right set.
 
-const CACHE_VERSION = "gradtoken-shell-v4";
+const CACHE_VERSION = "gradtoken-shell-v5";
 
 const PRECACHE_URLS = [
   "/index.html",
@@ -89,6 +89,10 @@ self.addEventListener("fetch", (event) => {
   if (url.origin !== self.location.origin || url.pathname.startsWith("/.netlify/functions/")) {
     return;
   }
+      // Leave the large WalletConnect bundle and the admin pages to the browser's normal cache rules
+     if (url.pathname.endsWith("/walletconnect.bundle.js") || url.pathname.startsWith("/admin/")) {
+       return;
+     }
 
   // Only handle GET; POST/PUT etc. (submissions, progress updates) always
   // go straight to the network untouched.

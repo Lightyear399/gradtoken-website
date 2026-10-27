@@ -23,3 +23,34 @@
   for = "/css/*"
   [headers.values]
     Cache-Control = "public, max-age=86400"
+# Add these rules to your netlify.toml, BELOW the existing [[headers]] for "/*".
+# Netlify applies the most specific matching rule instead of merging, so each rule below restates every
+# security header and only relaxes the Content-Security-Policy that page needs. Everything else keeps the strict policy.
+# After deploying, check with:  curl -sI https://YOUR-SITE/learn/rewards.html | grep -i content-security
+
+# Rewards page: WalletConnect relay + Base RPC. The wallet session cookie is host-only and SameSite=Strict,
+# so this page MUST be served from the same host as the rest of the site (not a separate subdomain).
+[[headers]]
+  for = "/learn/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://sepolia.base.org wss://relay.walletconnect.org wss://relay.walletconnect.com https://rpc.walletconnect.org https://verify.walletconnect.org https://verify.walletconnect.com https://pulse.walletconnect.org; frame-src https://verify.walletconnect.org https://verify.walletconnect.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Resource-Policy = "same-origin"
+
+# Public certificate page: reads the chain directly from the public Base RPC
+[[headers]]
+  for = "/verify/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://sepolia.base.org; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Resource-Policy = "same-origin"

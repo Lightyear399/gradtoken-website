@@ -9,3 +9,6 @@ coverage.json
 *PRIVATE-DO-NOT-COMMIT*
 
 slither-env/
+*.zip
+deployments/hardhat-*.json
+.vscode/
