@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Review queue · GradToken</title>
+  <link rel="stylesheet" href="review.css">
+</head>
+<body>
+  <header class="bar">
+    <h1>Review queue</h1>
+    <div class="bar-right"><span id="who" class="muted"></span><button id="logout" class="ghost" hidden>Sign out</button></div>
+  </header>
+  <main>
+    <section id="login" class="card narrow">
+      <h2>Admin sign in</h2>
+      <form id="login-form">
+        <p class="muted">Connect an admin wallet and sign a message. No password, no fee.</p>
+        <button type="submit" class="primary">Connect wallet and sign in</button>
+        <p id="login-error" class="error" role="alert"></p>
+      </form>
+    </section>
+
+    <section id="app" hidden>
+      <div class="filters">
+        <label>Status
+          <select id="f-status">
+            <option value="pending">Pending</option><option value="approved">Approved</option>
+            <option value="resubmit">Resubmit requested</option><option value="rejected">Rejected</option>
+          </select>
+        </label>
+        <label>Course <select id="f-course"><option value="">All courses</option></select></label>
+        <button id="refresh" class="ghost">Refresh</button>
+        <span id="count" class="muted"></span>
+      </div>
+      <div class="layout">
+        <ul id="list" class="list" aria-label="Submissions"></ul>
+        <article id="detail" class="card"><p class="muted">Select a submission.</p></article>
+      </div>
+      <p id="app-error" class="error" role="alert"></p>
+    </section>
+  </main>
+  <script src="/js/gt-siwe.js"></script>
+  <script src="review.js"></script>
+</body>
+</html>

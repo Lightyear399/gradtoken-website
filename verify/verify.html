@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verify a GradToken certificate</title>
+  <link rel="stylesheet" href="verify.css">
+</head>
+<body>
+  <main>
+    <h1>Verify a certificate</h1>
+    <p class="muted">Enter a wallet address. Everything shown is read directly from the blockchain, not from our servers.</p>
+    <form id="form">
+      <input id="addr" placeholder="0x..." autocomplete="off" spellcheck="false" aria-label="Wallet address">
+      <button type="submit">Check</button>
+    </form>
+    <p id="msg" role="status" hidden></p>
+    <section id="result" hidden></section>
+  </main>
+  <script src="verify-core.js"></script>
+  <script src="verify.js"></script>
+</body>
+</html>
